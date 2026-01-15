@@ -40,6 +40,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/www/abrikosio.ru
+            source djangoenv/bin/activate
             python -m pip install --upgrade pip
             pip install -r requirements.txt
             cd abrikosio
