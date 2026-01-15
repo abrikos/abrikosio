@@ -41,4 +41,16 @@ jobs:
           script: |
             cd ~/www/abrikosio.ru
             git pull
+            python abrikosio/manage.py makemigrations
+            python abrikosio/manage.py migrate
             touch .restart-app
+
+#If you are using Github action, you have local PC for development, you access Github via ssh and you have a remote server where you want to deploy your code, following steps might apply to you.
+#
+#Generate local ssh keys in your local computer ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#Copy the content of your private key ~/.ssh/id_rsa to your clipboard
+#Create Github repository secret SSH_PRIVATE_KEY and paste your private key
+#copy the content of your public key ~/.ssh/id_rsa.pub to your clipboard
+#From your local computer ssh your remote host.
+#nano ~/.ssh/authorized_keys and paste your public key to the next line. If the file does not exit you can create it.
+#At that point you should be able to ssh your remote host without providing any password. And so should your Github action which has to behave like your local computer when appleboy/ssh-action uses your local private key.
