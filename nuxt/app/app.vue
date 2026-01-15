@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div> asdasdasda
     <NuxtRouteAnnouncer />
     <NuxtWelcome />
   </div>

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "nuxt generate && git add --all",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "move": "rm -fr ../static/_nuxt; mv ../blog/templates/_nuxt ../static/",
