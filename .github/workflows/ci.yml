@@ -39,7 +39,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/www/abrikosio.ru/abrikosio
+            cd ~/www/abrikosio.ru
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            cd abrikosio
             git pull
             python manage.py makemigrations
             python manage.py migrate
