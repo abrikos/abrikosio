@@ -42,9 +42,9 @@ jobs:
             cd ~/www/abrikosio.ru
             source djangoenv/bin/activate
             python -m pip install --upgrade pip
-            pip install -r requirements.txt
             cd abrikosio
             git pull
+            pip install -r requirements.txt
             python manage.py makemigrations
             python manage.py migrate
             touch ../.restart-app
