@@ -7,3 +7,4 @@ __pycache__
 *.sqlite3
 media
 my_site/static
+node_modules
