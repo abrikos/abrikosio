@@ -33,13 +33,13 @@ jobs:
 #    needs: build
 
     steps:
-      - name: Deploy to server # Шаг развертывания на сервер
+      - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_NAME }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/www/abrikosio.ru # Перейти в директорию вашего приложения
-            git pull # Скачать последние изменения
+            cd ~/www/abrikosio.ru
+            git pull
             touch .restart-app
