@@ -16,6 +16,7 @@ instance.interceptors.response.use(
     }
     //console.log(error.response)
     Notify.create({ message: error.response.statusText, color: 'red' });
+    return { data: { error:error.response.data } };
   },
 );
 

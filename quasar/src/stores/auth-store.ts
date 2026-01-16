@@ -27,14 +27,15 @@ export const useAuthStore = defineStore('auth', {
     async login(credentials: ICredentials) {
       const token = await axios.post('/token/', credentials);
       if(!token) return
-      Cookies.set('auth', token.data.access)
+      Cookies.set('auth', token.data?.access)
       await this.checkAuth()
     },
     async signup(credentials: ICredentials) {
       const user = await axios.post('/user/', credentials)
-      if(user){
+      if(!user.data.error){
         await this.login(credentials)
       }
+      return user;
     },
     async checkAuth(){
       const auth = Cookies.get('auth')
