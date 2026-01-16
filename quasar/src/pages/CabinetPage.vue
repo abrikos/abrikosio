@@ -13,11 +13,11 @@ const errors = ref({});
 
 async function setPassword() {
   if (!userStore.user) return;
-  const res = await axios.put(`/user/${userStore.user.id}/set_password`, credentials.value);
+  const res = await axios.put(`/user/${userStore.user.id}/set_password/`, credentials.value);
   if (res.data.error) {
     errors.value = res.data.error;
   }
-  $q.notify({ message: JSON.stringify(res) });
+  $q.notify({ message: res.data.status, color: 'green' });
 }
 </script>
 
@@ -27,7 +27,7 @@ async function setPassword() {
       q-toolbar-title Cabinet
     q-form(@submit="setPassword")
       password-confirmation(v-model="credentials" :errors="errors")
-      q-btn(type="submit")
+      q-btn(type="submit") Save
 
 
 </template>

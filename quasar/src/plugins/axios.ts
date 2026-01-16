@@ -3,7 +3,7 @@ import { Cookies, Notify } from 'quasar';
 
 const instance = axios.create({
   baseURL: '/api',
-  headers: { CSRFToken: Cookies.get('csrftoken') },
+  headers: { CSRFToken: Cookies.get('csrftoken'), Authorization: 'Bearer ' + Cookies.get('auth') },
 });
 instance.interceptors.response.use(
   (res) => {
@@ -16,7 +16,7 @@ instance.interceptors.response.use(
     }
     //console.log(error.response)
     Notify.create({ message: error.response.statusText, color: 'red' });
-    return { data: { error:error.response.data } };
+    return { data: { error: error.response.data } };
   },
 );
 

@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/cabinet',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/Cabinet.vue') }],
+    children: [{ path: '', component: () => import('pages/CabinetPage.vue') }],
   },
 
   // Always leave this as last one,

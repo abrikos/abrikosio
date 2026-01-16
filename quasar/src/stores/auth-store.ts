@@ -1,7 +1,8 @@
-import {defineStore, acceptHMRUpdate} from 'pinia';
-import {Cookies} from 'quasar'
-import type {ICredentials} from "pages/LoginPage.vue";
+import { defineStore, acceptHMRUpdate } from 'pinia';
+import { Cookies } from 'quasar';
+import type { ICredentials } from 'pages/LoginPage.vue';
 import axios from '../plugins/axios';
+import { useRouter } from 'vue-router';
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({
@@ -26,27 +27,30 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(credentials: ICredentials) {
       const token = await axios.post('/token/', credentials);
-      if(!token) return
-      Cookies.set('auth', token.data?.access)
-      await this.checkAuth()
+      if (!token) return;
+      Cookies.set('auth', token.data?.access);
+      return this.checkAuth();
     },
     async signup(credentials: ICredentials) {
-      const user = await axios.post('/user/', credentials)
-      if(!user.data.error){
-        await this.login(credentials)
+      const user = await axios.post('/user/', credentials);
+      if (!user.data.error) {
+        await this.login(credentials);
       }
       return user;
     },
-    async checkAuth(){
-      const auth = Cookies.get('auth')
-      const user = await axios.get('/user/auth', {headers: {'Authorization': 'Bearer ' + auth}})
-      this.user = user?.data
+    async checkAuth() {
+      const auth = Cookies.get('auth');
+      const user = await axios.get('/user/auth' );
+      if(user && !user.data.erors) {
+        this.user = user.data;
+        return this.user;
+      }
     },
     logout() {
-      this.user = null
-      Cookies.set('auth', '')
-    }
-  }
+      this.user = null;
+      Cookies.set('auth', '');
+    },
+  },
 });
 
 if (import.meta.hot) {

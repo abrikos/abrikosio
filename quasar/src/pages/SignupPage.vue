@@ -4,8 +4,10 @@ import type { ICredentials } from 'pages/LoginPage.vue';
 import { useAuthStore } from 'stores/auth-store';
 import validator from '../plugins/validators';
 import PasswordConfirmation from 'components/PasswordConfirmation.vue';
-const errors = ref({});
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const errors = ref({});
 const credentials = ref<ICredentials>({ email: Math.random() + '@gg.com', password: '1' });
 
 async function signup() {
@@ -13,6 +15,8 @@ async function signup() {
   const res = await auth.signup(credentials.value);
   if (res.data.error) {
     errors.value = res.data.error;
+  }else{
+      await router.push('/cabinet')
   }
 }
 </script>
