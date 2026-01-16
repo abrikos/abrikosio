@@ -7,8 +7,9 @@
         q-toolbar-title Quasar App
         q-btn(to="/") Home
         q-btn(to="/blog") Blog
-        q-btn(to="/login") Login
-        div Quasar v{{ $q.version }}
+        q-btn(@click="userStore.logout" v-if="userStore.user") Loout
+        q-btn(to="/login" v-else) Login
+        div {{userStore.user?.email}}
 
     q-drawer(v-model="leftDrawerOpen" show-if-above bordered)
       q-list
@@ -18,12 +19,19 @@
 
     q-page-container
       router-view
+    q-footer
+      q-toolbar
+        div Quasar v{{ $q.version }}
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
+import {useAuthStore} from "stores/auth-store";
+const userStore = useAuthStore()
+async function logout(){
 
+}
 const linksList: EssentialLinkProps[] = [
   {
     title: 'Docs',

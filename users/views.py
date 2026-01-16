@@ -1,4 +1,4 @@
-from django.contrib.admin.decorators import action
+from rest_framework.decorators import action
 from django.http.response import HttpResponse
 from django.middleware.csrf import get_token
 from rest_framework import viewsets
@@ -35,7 +35,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
-
-def get_csrf(self, request, *args, **kwargs):
-    print(get_token(request))
-    return HttpResponse(get_token(request))
+    @action(detail=False, methods=['GET'])
+    def auth(self, request, pk=None):
+        return Response(UserSerializer(request.user).data)

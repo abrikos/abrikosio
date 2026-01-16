@@ -2,23 +2,26 @@
 import {ref} from 'vue'
 import { Cookies } from 'quasar'
 import axios from "axios";
+import {useAuthStore} from "stores/auth-store";
+
+export interface ICredentials {
+  email: string;
+  password?: string;
+}
 
 
-const user = ref({email:'test211@b.com',password:'1'})
+const userStore = useAuthStore()
+const credentials = ref<ICredentials>({email:'test211@b.com',password:'1'})
 
 async function login(){
-  const csrftoken =  Cookies.get('csrftoken')
-  const token =  await axios.post('/token/', user.value, {headers: {'CSRFToken': csrftoken}})
-  const users = await  axios.get('/user', {headers: {'Authorization': 'Bearer ' + token.data.access}})
-  console.log(users)
-  Cookies.set('auth', token.data.access)
+  return userStore.login(credentials.value)
 }
 </script>
 
 <template lang="pug">
 q-page
-  q-input(v-model="user.email")
-  q-input(v-model="user.password")
+  q-input(v-model="credentials.email")
+  q-input(v-model="credentials.password")
   q-btn(@click="login") Send
 </template>
 
