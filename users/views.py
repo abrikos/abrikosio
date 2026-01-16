@@ -1,14 +1,14 @@
 from rest_framework.decorators import action
 from django.http.response import HttpResponse
 from django.middleware.csrf import get_token
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import User
-from users.serializers import MyTokenObtainPairSerializer, UserSerializer
+from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer
 
 
 # Create your views here.
@@ -38,3 +38,16 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def auth(self, request, pk=None):
         return Response(UserSerializer(request.user).data)
+
+    @action(detail=True, methods=['PUT'])
+    def set_password(self, request, pk=None):
+
+        user = self.get_object()
+        serializer = PasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['password'])
+            user.save()
+            return Response({'status': 'password set'})
+        else:
+            return Response(serializer.errors,   status=status.HTTP_400_BAD_REQUEST)
+
