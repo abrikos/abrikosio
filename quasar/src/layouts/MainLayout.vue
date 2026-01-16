@@ -5,12 +5,12 @@
         q-btn( flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" )
 
         q-toolbar-title Quasar App
-        q-btn(to="/xxx") Home
-        q-btn(to="/blog") Blog
-        q-btn(@click="userStore.logout" v-if="userStore.user") Sign out
+        q-btn(to="/" flat) Home
+        q-btn(to="/blog" flat) Blog
+        q-btn(@click="userStore.logout" v-if="userStore.user" flat) Sign out
         div( v-else)
-          q-btn(to="/login") Sign in
-          q-btn(to="/signup") Sign up
+          q-btn(to="/login" flat) Sign in
+          q-btn(to="/signup" flat) Sign up
         div {{userStore.user?.email}}
 
     q-drawer(v-model="leftDrawerOpen" show-if-above bordered)

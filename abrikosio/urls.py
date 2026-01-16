@@ -27,12 +27,12 @@ from .views import get_csrf
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
-    path("api/", include("api.urls")),
-    path("user/", include("users.urls")),
     path("pages/", include("blog.urls")),
-    path("csrf_token/", get_csrf),
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
+
+    path("api/user/", include("users.urls")),
+    path("api/csrf_token/", get_csrf),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
     path('', RedirectView.as_view(pattern_name='pages', permanent=False))
     #path(r'^assets/(?P<path>.*)$', static.serve, {'document_root': settings.BASE_DIR + "/assets"}),
 

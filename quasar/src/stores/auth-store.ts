@@ -1,7 +1,7 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
 import {Cookies} from 'quasar'
-import axios from "axios";
-import {ICredentials} from "pages/LoginPage.vue";
+import type {ICredentials} from "pages/LoginPage.vue";
+import axios from '../plugins/axios';
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({
@@ -24,20 +24,24 @@ export const useAuthStore = defineStore('auth', {
     user: null,
   }),
   actions: {
-    async login(user: ICredentials) {
-      const csrftoken = Cookies.get('csrftoken')
-      const token = await axios.post('/token/', user, {headers: {'CSRFToken': csrftoken}})
-      // const auth = await axios.get('/user/auth', {headers: {'Authorization': 'Bearer ' + token.data.access}})
-      // this.user = auth.data
+    async login(credentials: ICredentials) {
+      const token = await axios.post('/token/', credentials);
+      if(!token) return
       Cookies.set('auth', token.data.access)
       await this.checkAuth()
+    },
+    async signup(credentials: ICredentials) {
+      const user = await axios.post('/user/', credentials)
+      if(user){
+        await this.login(credentials)
+      }
     },
     async checkAuth(){
       const auth = Cookies.get('auth')
       const user = await axios.get('/user/auth', {headers: {'Authorization': 'Bearer ' + auth}})
-      this.user = user.data
+      this.user = user?.data
     },
-    async logout() {
+    logout() {
       this.user = null
       Cookies.set('auth', '')
     }

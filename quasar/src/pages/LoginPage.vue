@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import { Cookies } from 'quasar'
-import axios from "axios";
 import {useAuthStore} from "stores/auth-store";
 
 export interface ICredentials {
   email: string;
   password?: string;
+  password2?: string;
 }
 
 
