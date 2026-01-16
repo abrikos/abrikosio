@@ -1,20 +1,25 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type {RouteRecordRaw} from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [{path: '', component: () => import('pages/IndexPage.vue')}],
   },
   {
     path: '/blog',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/BlogPage.vue') }],
+    children: [{path: '', component: () => import('pages/BlogPage.vue')}],
   },
   {
     path: '/login',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+    children: [{path: '', component: () => import('pages/LoginPage.vue')}],
+  },
+  {
+    path: '/signup',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{path: '', component: () => import('pages/SignupPage.vue')}],
   },
 
   // Always leave this as last one,

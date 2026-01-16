@@ -1,7 +1,0 @@
-#!/bin/bash
-pwd
-npm run build
-ls -l ../static
-
-git add ../blog/templates/index.html
-git add ../static/*
