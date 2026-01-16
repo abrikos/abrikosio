@@ -6,5 +6,5 @@ __pycache__
 .env
 *.sqlite3
 media
-my_site/static
 node_modules
+.yarn

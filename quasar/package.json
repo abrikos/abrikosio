@@ -11,16 +11,18 @@
     "format": "prettier --write \"**/*.{js,ts,vue,,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "build": "quasar build",
+    "build": "./build.sh",
     "postinstall": "quasar prepare"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "@vueuse/integrations": "^14.1.0",
     "axios": "^1.2.1",
     "pinia": "^3.0.1",
     "pug": "^3.0.3",
     "quasar": "^2.16.0",
     "vue": "^3.5.22",
+    "vue-cookies": "^1.8.6",
     "vue-i18n": "^11.0.0",
     "vue-router": "^4.0.12"
   },

@@ -1,1 +1,0 @@
-import{Q as n}from"./QPage-BMtciVMr.js";import{Q as s,S as c,Y as l,R as f}from"./index-DlD7SnuC.js";import"./render-JSEYwS9a.js";function i(e,t){return f(),s(n,null,{default:c(()=>[...t[0]||(t[0]=[l("div",null,"zzzz",-1)])]),_:1})}const p=(e,t)=>{const o=e.__vccOpts||e;for(const[r,a]of t)o[r]=a;return o},u={},g=p(u,[["render",i]]);export{g as default};

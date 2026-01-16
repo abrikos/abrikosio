@@ -33,13 +33,12 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
-      //publicPath :"/static",
-      distDir: '../static',
+      publicPath :"/pages",
+      distDir: '../static/quasar',
       // https://www.youtube.com/watch?v=gv1zyu1BdVs
       extendViteConf(viteConf){
         viteConf.base = "/static"
       },
-      //publicPath: 'static',
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
@@ -124,7 +123,7 @@ export default defineConfig((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Cookies'],
     },
 
     // animations: 'all', // --- includes all animations

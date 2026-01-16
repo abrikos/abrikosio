@@ -17,11 +17,11 @@ import ExampleComponent from 'components/ExampleComponent.vue';
 const todos = ref<Todo[]>([
   {
     id: 1,
-    content: 'ct1',
+    content: Math.random().toString(),
   },
   {
     id: 2,
-    content: 'ct2',
+    content: 'ct211111111111',
   },
   {
     id: 3,

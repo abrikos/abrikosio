@@ -1,7 +1,5 @@
 #!/bin/bash
-pwd
-npm run build
-ls -l ../static
-
+quasar build
+mv ../static/quasar/index.html ../blog/templates
 git add ../blog/templates/index.html
 git add ../static/*

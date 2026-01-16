@@ -1,3 +1,6 @@
+from django.contrib.admin.decorators import action
+from django.http.response import HttpResponse
+from django.middleware.csrf import get_token
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -33,13 +36,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-class TestView(APIView):
-    """Subscribe to course"""
-    def post(self, request):
-        return Response(
-            {
-                "message": "message",
-                "payment_url": "session.url",
-                "session_id": "session.id",
-            }
-        )
+def get_csrf(self, request, *args, **kwargs):
+    print(get_token(request))
+    return HttpResponse(get_token(request))

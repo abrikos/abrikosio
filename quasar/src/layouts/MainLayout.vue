@@ -1,28 +1,23 @@
-<template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+<template lang="pug">
+  q-layout( view="lHh Lpr lFf")
+    q-header( elevated)
+      q-toolbar
+        q-btn( flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" )
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-        <q-btn to="/">Home</q-btn>
-        <q-btn to="/blog">Blog</q-btn>
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+        q-toolbar-title Quasar App
+        q-btn(to="/") Home
+        q-btn(to="/blog") Blog
+        q-btn(to="/login") Login
+        div Quasar v{{ $q.version }}
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+    q-drawer(v-model="leftDrawerOpen" show-if-above bordered)
+      q-list
+        q-item-label( header) Drawer
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
-      </q-list>
-    </q-drawer>
+        EssentialLink( v-for="link in linksList" :key="link.title" v-bind="link" )
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+    q-page-container
+      router-view
 </template>
 
 <script setup lang="ts">
