@@ -11,17 +11,20 @@
     "build": "vite build",
     "preview": "vite preview",
     "move": "rm -fr ../static/blog; mv ../blog/templates/static/blog ../static/",
-    "all": "npm run build && npm run move"
+    "all": "npm run build && ./front.sh"
   },
   "dependencies": {
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "@vue/test-utils": "^2.4.6",
+    "vue": "^3.5.26"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/language-plugin-pug": "^3.2.2",
+    "@vueuse/head": "^2.0.0",
     "pug": "^3.0.3",
     "vite": "^7.3.0",
-    "vite-plugin-vue-devtools": "^8.0.5"
+    "vite-plugin-vue-devtools": "^8.0.5",
+    "vite-ssg": "^28.2.2",
+    "vue-router": "^4.0.13"
   }
 }

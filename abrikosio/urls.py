@@ -24,6 +24,5 @@ from blog.views import MainPageView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("api.urls")),
-    #path("blog/", include("blog.urls")),
-    path('', MainPageView.as_view())
+    path("", include("blog.urls")),
 ]

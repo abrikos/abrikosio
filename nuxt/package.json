@@ -5,14 +5,20 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate && git add --all",
+    "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "move": "rm -fr ../static/_nuxt; mv ../blog/templates/_nuxt ../static/",
-    "all": "npm run generate && npm run move"
+    "all": "npm run generate && ./front.sh"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.11.3",
+    "@quasar/extras": "^1.17.0",
     "nuxt": "^4.2.2",
+    "nuxt-quasar-ui": "^3.0.0",
+    "pinia": "^3.0.4",
+    "pug": "^3.0.3",
+    "quasar": "^2.18.6",
+    "sass": "^1.97.2",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
