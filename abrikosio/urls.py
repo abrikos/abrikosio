@@ -28,10 +28,10 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
     #path("pages/", TemplateView.as_view(template_name="index.html"), name='pages'),
-    re_path(r'^pages/.*$', TemplateView.as_view(template_name="test.html"), name='pages'),
+    re_path(r'^pages/.*$', TemplateView.as_view(template_name="index.html"), name='pages'),
     path("api/post/", include("post.urls")),
     path("api/user/", include("users.urls")),
-    path("api/csrf_token/", get_csrf),
+    #path("api/csrf_token/", get_csrf),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
     path('', RedirectView.as_view(pattern_name='pages', permanent=False))
