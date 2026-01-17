@@ -1,43 +1,29 @@
-<template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+<template lang="pug">
+  q-page.row.items-center.justify-evenly
+    q-card(v-for="post in posts")
+      q-toolbar
+        q-toolbar-title
+          q-avatar
+            user-avatar(:user="post.user")
+          q-btn(:to="`/post-view/${post.id}`" flat no-caps) {{ post.title }}
+      q-card-section {{ post.short }}
+        small {{ post.created_at }}
+      q-card-actions
+        q-btn(size="sm" icon="edit" v-if="userStore.user?.id === post.user.id" :to="`/post-edit/${post.id}`")
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/ExampleComponent.vue';
+import axios from 'src/plugins/axios';
+import UserAvatar from 'components/UserAvatar.vue';
+import { useAuthStore } from 'stores/auth-store';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: Math.random().toString(),
-  },
-  {
-    id: 2,
-    content: 'ct211111111111',
-  },
-  {
-    id: 3,
-    content: 'ct3',
-  },
-  {
-    id: 4,
-    content: 'ct4',
-  },
-  {
-    id: 5,
-    content: 'ct5',
-  },
-]);
-
-const meta = ref<Meta>({
-  totalCount: 1200,
+const userStore = useAuthStore();
+const posts = ref([]);
+onMounted(async () => {
+  const res = await axios.get(`/post/`);
+  posts.value = res.data;
 });
 </script>

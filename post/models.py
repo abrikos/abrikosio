@@ -14,7 +14,10 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=255, blank=True)
     body = models.TextField(blank=True)
+    short = models.TextField(max_length=500, blank=True)
     image = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    published = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
         return self.title

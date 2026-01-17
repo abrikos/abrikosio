@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "django_browser_reload",
     'users',
+    'post',
     'pages'
 ]
 

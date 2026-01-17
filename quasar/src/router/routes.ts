@@ -26,6 +26,21 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/CabinetPage.vue') }],
   },
+  {
+    path: '/post-edit',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/PostEdit.vue') }],
+  },
+  {
+    path: '/post-edit/:id(.*)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/PostEdit.vue') }],
+  },
+  {
+    path: '/post-view/:id(.*)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/PostView.vue') }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

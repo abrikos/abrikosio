@@ -40,9 +40,10 @@ async function setAvatar(file: string) {
       password-confirmation(v-model="credentials" :errors="errors")
       q-btn(type="submit") Save
 
-    q-form(@submit="updateUser")
+    q-form(@submit="updateUser()")
       q-input(v-model="userStore.user.first_name" label="First Name" )
       q-input(v-model="userStore.user.last_name" label="Last Name" )
+      q-file
       q-btn(type="submit") Save
 
     user-avatar(:user="userStore.user")

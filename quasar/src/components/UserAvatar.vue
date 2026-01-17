@@ -8,8 +8,9 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template lang="pug">
-  q-avatar(size="150px")
-    q-img(:src="props.user.avatar || '/static/no-avatar.png'")
+  q-avatar
+    q-img(:src="props.user.avatar || '/static/no-avatar.png'" fit="fill")
+    q-tooltip {{props.user.display_name}}
 
 </template>
 

@@ -4,7 +4,7 @@ from .views import PostViewSet
 
 # Описание маршрутизации для ViewSet
 router = DefaultRouter()
-router.register("post", PostViewSet, basename="post")
+router.register("", PostViewSet, basename="post")
 
 urlpatterns = router.urls
 

@@ -4,8 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Post
 from .permissions import IsStaffUser
-from .serializers import PostSerializer
-
+from .serializers import PostSerializer, PostSerializerUpdate
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -28,3 +27,10 @@ class PostViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsStaffUser]
         return [permission() for permission in permission_classes]
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.action == 'partial_update':
+            serializer_class = PostSerializerUpdate
+
+        return serializer_class

@@ -40,5 +40,12 @@ class User(AbstractUser):
     country = models.CharField(
         max_length=50, verbose_name="Country", null=True, blank=True
     )
+
+    @property
+    def display_name(self):
+        if self.first_name or self.last_name:
+            return self.first_name + ' ' + self.last_name
+        else:
+            return self.email
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

@@ -34,7 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = 'id','email', 'password', 'password2', 'first_name', 'last_name', 'avatar'
+        fields = 'id','email', 'password', 'password2', 'first_name', 'last_name', 'avatar', 'is_staff', 'display_name'
 
     def validate(self, attrs):
         if 'password' in attrs and 'password2' in attrs:
@@ -57,4 +57,4 @@ class UserSerializer(serializers.ModelSerializer):
 class UserSerializerForUpdate(UserSerializer):
     class Meta:
         model = User
-        fields = tuple(set(UserSerializer.Meta.fields).difference(('email', 'id', 'password')))
+        fields = tuple(set(UserSerializer.Meta.fields).difference(('email', 'id', 'password', 'is_staff', 'avatar')))

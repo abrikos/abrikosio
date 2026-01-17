@@ -14,8 +14,8 @@ instance.interceptors.response.use(
     if (error.response?.status === 401) {
       return;
     }
-    //console.log(error.response)
-    Notify.create({ message: error.response.statusText, color: 'red' });
+    console.log(error.response.data)
+    Notify.create({ message: JSON.stringify(error.response.data), color: 'red' });
     return { data: { error: error.response.data } };
   },
 );
