@@ -37,7 +37,6 @@ urlpatterns = [
     path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
     path('', RedirectView.as_view(pattern_name='pages', permanent=False))
     #path(r'^assets/(?P<path>.*)$', static.serve, {'document_root': settings.BASE_DIR + "/assets"}),
-
 ]
 
 urlpatterns +=staticfiles_urlpatterns()
