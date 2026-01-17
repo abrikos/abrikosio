@@ -1,0 +1,1 @@
+import{d as o,_ as n,$ as s,a0 as a,f as r,a9 as c,a3 as f,k as i}from"./index-C2q_0cn-.js";import{Q as l}from"./QPage-XgFPLdTv.js";const m=o({__name:"BlogPage",setup(p){async function e(){return await i.post("/token")}return(u,t)=>(s(),n(l,null,{default:a(()=>[r(c,{onClick:e},{default:a(()=>[...t[0]||(t[0]=[f("test",-1)])]),_:1})]),_:1}))}});export{m as default};

@@ -19,6 +19,16 @@ async function setPassword() {
   }
   $q.notify({ message: res.data.status, color: 'green' });
 }
+
+async function setAvatar(file: string) {
+  if (!userStore.user) return;
+  const res = await axios.post(`/user/${userStore.user.id}/set_avatar/`, file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  $q.notify({ message: res.data.status, color: 'green' });
+}
 </script>
 
 <template lang="pug">
@@ -28,6 +38,9 @@ async function setPassword() {
     q-form(@submit="setPassword")
       password-confirmation(v-model="credentials" :errors="errors")
       q-btn(type="submit") Save
+    div {{userStore.user.avatar}}
+    q-img(:src="userStore.user.avatar")
+    q-uploader(url="" @added="setAvatar")
 
 
 </template>

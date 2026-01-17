@@ -49,5 +49,15 @@ class UserViewSet(viewsets.ModelViewSet):
             user.save()
             return Response({'status': 'password set'})
         else:
-            return Response(serializer.errors,   status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['POST'])
+    def set_avatar(self, request, pk=None):
+        user = self.get_object()
+        if request.FILES:
+            print(request.FILES['0'])
+            user.avatar = request.FILES['0']
+            user.save()
+            return Response({'status': 'avatar set'})
+        else:
+            return Response({'error': 'wrong file'}, status=status.HTTP_400_BAD_REQUEST)
