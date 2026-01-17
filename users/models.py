@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
-
+import hashlib
 
 # Create your models here.
 class Manager(UserManager):
@@ -25,7 +25,7 @@ class Manager(UserManager):
         return user
 
 def avatar_rename(instance, filename):
-    return 'static/avatar/{0}-{1}'.format(instance, filename)
+    return 'static/avatar/{0}.{1}'.format(hashlib.md5(b'{instance.email}').hexdigest(), filename.split('.')[1])
 
 class User(AbstractUser):
     """User model"""

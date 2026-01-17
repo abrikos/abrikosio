@@ -1,1 +1,0 @@
-import{j as s,k as a}from"./index-C2q_0cn-.js";const t=a.create({baseURL:"http://localhost:8000"}),i=s(({app:o})=>{o.config.globalProperties.$axios=a,o.config.globalProperties.$api=t});export{t as api,i as default};

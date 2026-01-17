@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from django.http.response import HttpResponse
 from django.middleware.csrf import get_token
@@ -8,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import User
-from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer
+from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer, UserSerializerForUpdate
 
 
 # Create your views here.
@@ -32,8 +33,15 @@ class UserViewSet(viewsets.ModelViewSet):
             permission_classes = []
         else:
             permission_classes = [IsAuthenticated]
-
         return [permission() for permission in permission_classes]
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.action == 'partial_update':
+            serializer_class = UserSerializerForUpdate
+
+        return serializer_class
+
 
     @action(detail=False, methods=['GET'])
     def auth(self, request, pk=None):
