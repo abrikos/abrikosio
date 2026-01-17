@@ -39,15 +39,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            source djangoenv/bin/activate
-            cd ~/www/abrikosio.ru
-            python -m pip install --upgrade pip
-            cd abrikosio
+            cd ~abrikosio
             git pull
-            pip install -r requirements.txt
-            python manage.py makemigrations
-            python manage.py migrate
-            touch ../.restart-app
+            docker compose down
+            docker-compose up -d
+            
 
 #If you are using Github action, you have local PC for development, you access Github via ssh and you have a remote server where you want to deploy your code, following steps might apply to you.
 #
