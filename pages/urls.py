@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 
-from api.views import PostViewSet
+from .views import PostViewSet
 
 # Описание маршрутизации для ViewSet
 router = DefaultRouter()

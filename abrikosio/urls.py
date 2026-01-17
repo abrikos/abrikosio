@@ -15,10 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views import static
 from django.conf import settings
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.views import MyTokenObtainPairView
@@ -27,8 +27,9 @@ from .views import get_csrf
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
-    path("pages/", include("blog.urls")),
-
+    #path("pages/", TemplateView.as_view(template_name="index.html"), name='pages'),
+    re_path(r'^pages/.*$', TemplateView.as_view(template_name="index.html"), name='pages'),
+    path("api/pages/", include("pages.urls")),
     path("api/user/", include("users.urls")),
     path("api/csrf_token/", get_csrf),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

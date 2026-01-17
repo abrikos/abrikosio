@@ -7,11 +7,13 @@
         q-toolbar-title Quasar App
         q-btn(to="/" flat) Home
         q-btn(to="/blog" flat) Blog
-        q-btn(@click="userStore.logout" v-if="userStore.user" flat) Sign out
+        div(v-if="userStore.user")
+          q-btn(@click="userStore.logout"  flat) Sign out
+          q-btn(to="/cabinet") {{userStore.user?.email}}
         div( v-else)
           q-btn(to="/login" flat) Sign in
           q-btn(to="/signup" flat) Sign up
-        div {{userStore.user?.email}}
+
 
     q-drawer(v-model="leftDrawerOpen" show-if-above bordered)
       q-list
