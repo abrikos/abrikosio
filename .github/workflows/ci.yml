@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~abrikosio
+            cd ~/abrikosio
             git pull
             docker compose down
             docker-compose up -d
