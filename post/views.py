@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Post
-from .permissions import IsStaffUser
+from .permissions import IsPublisher
 from .serializers import PostSerializer, PostSerializerUpdate
 
 
@@ -25,7 +25,7 @@ class PostViewSet(viewsets.ModelViewSet):
         if self.action in ("list", 'view'):
             permission_classes = []
         else:
-            permission_classes = [IsStaffUser]
+            permission_classes = [IsPublisher]
         return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):

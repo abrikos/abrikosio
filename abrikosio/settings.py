@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     "django_browser_reload",
+    'corsheaders',
     'users',
     'post',
     'pages'
@@ -55,7 +57,34 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:9000',
+    'http://127.0.0.1:9000'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:9000",
+    "http://127.0.0.1:9000",
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOW_HEADERS = (
+    *default_headers,
+    "CSRFToken",
+)
 
 ROOT_URLCONF = 'abrikosio.urls'
 
@@ -146,3 +175,43 @@ AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Source - https://stackoverflow.com/a
+# Posted by m01, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-01-18, License - CC BY-SA 3.0
+
+# LOGGING = {
+#     'version': 1,
+#     'formatters': {
+#         'verbose': {
+#             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': './django.log',
+#             'formatter': 'simple'
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     }
+# }
+#
+# if DEBUG:
+#     # make all loggers use the console.
+#     for logger in LOGGING['loggers']:
+#         LOGGING['loggers'][logger]['handlers'] = ['console']

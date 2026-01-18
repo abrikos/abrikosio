@@ -37,9 +37,7 @@ class User(AbstractUser):
     tg_chat_id = models.CharField(
         max_length=150, verbose_name="Telegram chat id", null=True, blank=True
     )
-    country = models.CharField(
-        max_length=50, verbose_name="Country", null=True, blank=True
-    )
+    publisher = models.BooleanField(verbose_name="Is publisher", default=False )
 
     @property
     def display_name(self):

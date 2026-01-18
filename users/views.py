@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from django.http.response import HttpResponse
@@ -41,6 +43,14 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer_class = UserSerializerForUpdate
 
         return serializer_class
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        if self.request.data['email'] == os.getenv("SUPER_USER"):
+            instance.publisher = True
+        instance.save()
+
+
 
 
     @action(detail=False, methods=['GET'])
