@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+import markdown
 
 # Create your models here.
 class Post(models.Model):
@@ -19,3 +19,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def markdown_body(self):
+        return markdown.markdown(self.body)
+    @property
+    def date(self):
+        return self.created_at.strftime("%Y-%m-%d, %H:%M:%S")

@@ -8,7 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = "title", "short", "body", 'id', 'user', 'date'
     def validate(self, attrs):
         if 'title' not in attrs:
             raise serializers.ValidationError("Title required")

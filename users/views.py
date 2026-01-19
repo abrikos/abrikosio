@@ -27,7 +27,6 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        print(self.action)
         if self.action == "create":
             permission_classes = []
         else:
