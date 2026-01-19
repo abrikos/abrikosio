@@ -6,11 +6,6 @@ from .models import Post
 from .permissions import IsPublisher
 from .serializers import PostSerializer, PostSerializerUpdate
 
-p = Post(title='zzzzz')
-p.save()
-ps = Post.objects.all()
-print(len(ps))
-
 class PostViewSet(viewsets.ModelViewSet):
     """Post REST"""
 
