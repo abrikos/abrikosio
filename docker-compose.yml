@@ -23,7 +23,6 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      PGDATA: /data/postgres
       POSTGRES_DB: ${DB_NAME}
     expose:
       - "5432"
@@ -39,4 +38,5 @@ networks:
 
 volumes:
   postgres_data:
+    driver: local
   static_volume:
