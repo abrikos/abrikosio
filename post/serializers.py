@@ -9,12 +9,11 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
-
     def validate(self, attrs):
-        if len( set(attrs).intersection({'title', 'short'})) < 2:
-            raise serializers.ValidationError(
-                {"title": "Title required", "short":"Short required"}
-        )
+        if 'title' not in attrs:
+            raise serializers.ValidationError("Title required")
+        if 'short' not in attrs:
+            raise serializers.ValidationError("Short required")
         return attrs
 
 class PostSerializerUpdate(PostSerializer):

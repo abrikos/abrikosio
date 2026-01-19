@@ -9,8 +9,6 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="post_user_set",
-        null=True,
-        blank=True
     )
     title = models.CharField(max_length=255, blank=True)
     body = models.TextField(blank=True)
