@@ -68,8 +68,8 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['POST'])
     def set_avatar(self, request, pk=None):
         user = self.get_object()
-        print(request.FILES)
         if request.FILES:
+            user.avatar.delete(save=False)
             user.avatar = request.FILES['0']
             user.save()
             return Response({'status': 'avatar set'})
