@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import User
 from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer, UserSerializerForUpdate
+from wonderwords import RandomWord
 
 
 # Create your views here.
@@ -41,9 +42,12 @@ class UserViewSet(viewsets.ModelViewSet):
         return serializer_class
 
     def perform_create(self, serializer):
+        r = RandomWord()
+        r2 = RandomWord()
         instance = serializer.save()
         if self.request.data['email'] == os.getenv("SUPER_USER"):
             instance.publisher = True
+        instance.nickname = r.word() + ' ' + r2.word()
         instance.save()
 
 
@@ -64,6 +68,14 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'status': 'password set'})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['DELETE'])
+    def delete_avatar(self, request, pk=None):
+        user = self.get_object()
+        user.avatar.delete(save=False)
+        user.avatar = None
+        user.save()
+        return Response({'status': 'avatar deleted'})
 
     @action(detail=True, methods=['POST'])
     def set_avatar(self, request, pk=None):

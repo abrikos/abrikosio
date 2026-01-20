@@ -26,7 +26,7 @@ class Manager(UserManager):
 
 
 def avatar_rename(instance, filename):
-    return f'static/avatar/{hashlib.md5(b'{instance.email}').hexdigest()}'
+    return f'static/avatar/{hashlib.md5(instance.email.encode()).hexdigest()}'
 
 class User(AbstractUser):
     """User model"""
@@ -35,9 +35,8 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(verbose_name="email", unique=True)
     avatar = models.ImageField(upload_to=avatar_rename, verbose_name="AvatarImage", null=True, blank=True)
-    tg_chat_id = models.CharField(
-        max_length=150, verbose_name="Telegram chat id", null=True, blank=True
-    )
+    tg_chat_id = models.CharField(max_length=150, verbose_name="Telegram chat id", null=True, blank=True)
+    nickname = models.CharField(max_length=150, verbose_name="Nickname", null=True, blank=True)
     publisher = models.BooleanField(verbose_name="Is publisher", default=False )
 
     @property
