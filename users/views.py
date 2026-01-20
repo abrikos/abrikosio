@@ -53,7 +53,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def auth(self, request, pk=None):
         return Response(UserSerializer(request.user).data)
 
-    @action(detail=True, methods=['PUT'])
+    @action(detail=True, methods=['PATCH'])
     def set_password(self, request, pk=None):
 
         user = self.get_object()
@@ -68,8 +68,8 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['POST'])
     def set_avatar(self, request, pk=None):
         user = self.get_object()
+        print(request.FILES)
         if request.FILES:
-            print(request.FILES['0'])
             user.avatar = request.FILES['0']
             user.save()
             return Response({'status': 'avatar set'})
