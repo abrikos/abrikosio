@@ -26,7 +26,7 @@ class Manager(UserManager):
 
 
 def avatar_rename(instance, filename):
-    return f'static/avatar/{hashlib.md5(instance.email.encode()).hexdigest()}'
+    return f'static/{hashlib.md5(instance.email.encode()).hexdigest()}'
 
 class User(AbstractUser):
     """User model"""
