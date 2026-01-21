@@ -1,11 +1,13 @@
 # Create your views here.
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-from .models import Post
+from .models import Post, Rate
 from .permissions import IsPublisher
-from .serializers import PostSerializer, PostSerializerUpdate
+from .serializers import PostSerializer,  RateSerializer
 from rest_framework.response import Response
+from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
@@ -40,3 +42,12 @@ class PostViewSet(viewsets.ModelViewSet):
     def user_posts(self, *args, **kwargs):
         user = self.request.user
         return Response(PostSerializer(Post.objects.filter(user=user), many=True).data)
+
+class RateViewSet(viewsets.ModelViewSet):
+    queryset = Rate.objects.all()
+    serializer_class = RateSerializer
+    permission_classes = [IsAuthenticated]
+    http_method_names = ['post']
+    def perform_create(self, serializer):
+        post = get_object_or_404(Post, pk=self.request.data['post'])
+        serializer.save(user=self.request.user, post=post)
