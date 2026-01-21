@@ -3,9 +3,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 import markdown
 
-class Test(models.Model):
-    title = models.CharField(max_length=255, blank=True)
-
 # Create your models here.
 class Post(models.Model):
     """Post model"""
