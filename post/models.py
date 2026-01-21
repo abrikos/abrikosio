@@ -3,6 +3,9 @@ from django.core.exceptions import ValidationError
 from django.db import models
 import markdown
 
+class Test:
+    title = models.CharField(max_length=255, blank=True)
+
 # Create your models here.
 class Post(models.Model):
     """Post model"""
@@ -15,7 +18,6 @@ class Post(models.Model):
     body = models.TextField(blank=True)
     short = models.TextField(max_length=500, blank=True)
     poster = models.TextField(blank=True)
-    telegram = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)
 
