@@ -15,6 +15,7 @@ class Post(models.Model):
     body = models.TextField(blank=True)
     short = models.TextField(max_length=500, blank=True)
     poster = models.TextField(blank=True)
+    telegram = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)
 
