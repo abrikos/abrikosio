@@ -11,9 +11,9 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name="post_user_set",
     )
-    title = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255)
     body = models.TextField(blank=True)
-    short = models.TextField(max_length=500, blank=True)
+    short = models.TextField(max_length=500)
     poster = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)

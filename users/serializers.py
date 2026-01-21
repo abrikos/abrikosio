@@ -34,7 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = 'email','password', 'password2', 'avatar', 'publisher', 'nickname'
+        fields = 'id','email','password', 'password2', 'avatar', 'publisher', 'nickname'
 
     def validate(self, attrs):
         if 'password' in attrs and 'password2' in attrs:

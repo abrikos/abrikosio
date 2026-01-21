@@ -21,12 +21,6 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "title", "short", "body", 'id', 'user', 'date', 'poster', 'published', 'rates'
-    def validate(self, attrs):
-        if 'title' not in attrs:
-            raise serializers.ValidationError("Title required")
-        if 'short' not in attrs:
-            raise serializers.ValidationError("Short required")
-        return attrs
 
     def get_rates(self,obj):
         queryset = Rate.objects.filter(post=obj)
