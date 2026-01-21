@@ -13,7 +13,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Cache pip
       uses: actions/cache@v3
@@ -44,8 +44,6 @@ jobs:
             
             docker-compose down
             docker-compose up -d --build
-            docker exec -it abrikosio-web-1 python manage.py makemigrations
-            docker exec -it abrikosio-web-1 python manage.py migrate
             
 
 #If you are using Github action, you have local PC for development, you access Github via ssh and you have a remote server where you want to deploy your code, following steps might apply to you.
