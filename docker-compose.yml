@@ -9,7 +9,7 @@ services:
       bash -c "yes | python manage.py makemigrations && yes|python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
-      - static_volume:/code/static
+      - static_volume:/static
     ports:
       - "8000:8000"
     depends_on:
@@ -40,3 +40,4 @@ volumes:
   postgres_data:
     driver: local
   static_volume:
+    driver: local

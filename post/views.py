@@ -6,7 +6,8 @@ from .models import Post
 from .permissions import IsPublisher
 from .serializers import PostSerializer, PostSerializerUpdate
 from rest_framework.response import Response
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
 
 class PostViewSet(viewsets.ModelViewSet):
     """Post REST"""
@@ -14,6 +15,8 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     #permissions = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    ordering = ['-created_at']
 
     def get_permissions(self):
         """

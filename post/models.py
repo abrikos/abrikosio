@@ -17,6 +17,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)
 
+    class Meta:
+        ordering = ['-created_at']
     def __str__(self):
         return self.title
 
