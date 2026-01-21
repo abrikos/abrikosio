@@ -5,8 +5,7 @@ services:
     environment:
       DB_HOST: db
     build: .
-    command: >
-      bash -c "yes | python manage.py makemigrations && yes|python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
       - static_volume:/static
