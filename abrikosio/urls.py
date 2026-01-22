@@ -16,27 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include, re_path
-from django.views import static
-from django.conf import settings
-from django.views.generic.base import RedirectView, TemplateView
+from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.views import MyTokenObtainPairView
-from .views import get_csrf
+from .views import get_uptime
 
 urlpatterns = [
-    path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
-    #path("pages/", TemplateView.as_view(template_name="index.html"), name='pages'),
-    re_path(r'^pages/.*$', TemplateView.as_view(template_name="index.html"), name='pages'),
     path("api/post/", include("post.urls")),
     path("api/user/", include("users.urls")),
-    #path("api/csrf_token/", get_csrf),
+    path("api/uptime/", get_uptime),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
-    path('', RedirectView.as_view(pattern_name='pages', permanent=False))
-    #path(r'^assets/(?P<path>.*)$', static.serve, {'document_root': settings.BASE_DIR + "/assets"}),
 ]
 
 urlpatterns +=staticfiles_urlpatterns()
