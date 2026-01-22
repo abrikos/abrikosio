@@ -20,13 +20,14 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.views import MyTokenObtainPairView
-from .views import get_uptime
+from .views import get_sysinfo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/post/", include("post.urls")),
     path("api/user/", include("users.urls")),
-    path("api/uptime/", get_uptime),
+    path("api/sysinfo/", get_sysinfo),
+
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
 ]
