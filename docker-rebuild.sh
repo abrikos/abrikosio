@@ -8,6 +8,7 @@ if [[ $GIT =~ Already ]]; then
 else
   echo "$GIT"
   date > "$BASEDIR/updated.txt"
-  echo "Changes 222"
+  docker compose down
+  docker compose up --build -d
 fi
 
