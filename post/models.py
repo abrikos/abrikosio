@@ -15,8 +15,6 @@ class Post(models.Model):
     body = models.TextField(blank=True)
     short = models.TextField(max_length=500)
     views = models.IntegerField(default=0)
-    eeee = models.IntegerField(default=0)
-    uuuu = models.IntegerField(default=0)
     poster = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)
