@@ -6,7 +6,7 @@ services:
       DB_HOST: db
     build: .
     command: >
-      bash -c "python manage.py makemigrations && python manage.py migrate && && python manage.py migrate post zero && python manage.py migrate post && python manage.py runserver 0.0.0.0:8000"
+      bash -c "./run-docker.sh"
     volumes:
       - static_volume:/app/static
     ports:
