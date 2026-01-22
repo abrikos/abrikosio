@@ -20,6 +20,12 @@ services:
           path: .
           target: /app
           initial_sync: true
+          ignore:
+            - .git/
+            - .github/
+            - static/
+            - migrate.sh
+            - freeze.sh
 
   db:
     image: postgres:16.0
