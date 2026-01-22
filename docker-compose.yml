@@ -6,7 +6,7 @@ services:
       DB_HOST: db
     build: .
     command: >
-      bash -c "./run-docker.sh"
+      bash -c "./start-django-in-docker.sh"
     volumes:
       - static_volume:/app/static
     ports:
