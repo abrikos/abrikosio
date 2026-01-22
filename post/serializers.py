@@ -16,13 +16,13 @@ class RateSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    #rates = serializers.CharField(source='rate_post_set.values', read_only=True)
-    rates = serializers.SerializerMethodField()
+    rate = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Post
-        fields = "title", "short", "body", 'id', 'user', 'date', 'poster', 'published', 'rates'
+        fields = "title", "short", "body", 'id', 'user', 'date', 'poster', 'published', 'rate'
 
-    def get_rates(self,obj):
+    def get_rate(self,obj):
         queryset = Rate.objects.filter(post=obj)
-        return [RateSerializer(q).data for q in queryset]
-
+        def value(x):
+            return x['value']
+        return 0 if not len(queryset) else sum(map(value, [RateSerializer(q).data for q in queryset])) / len(queryset)
