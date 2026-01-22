@@ -8,6 +8,6 @@ if [[ $GIT =~ Already ]]; then
 else
   echo "$GIT"
   date > "$BASEDIR/updated.txt"
-
+  echo "Changes"
 fi
 
