@@ -16,7 +16,7 @@ services:
         condition: service_healthy
     develop:
       watch:
-        - action: sync
+        - action: rebuild
           path: .
           target: /app
           initial_sync: true
