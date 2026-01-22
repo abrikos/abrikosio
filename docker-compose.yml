@@ -14,6 +14,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          initial_sync: true
 
   db:
     image: postgres:16.0
