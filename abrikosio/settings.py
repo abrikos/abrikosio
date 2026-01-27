@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_browser_reload",
     'rest_framework',
     'corsheaders',
     'users',
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:9000',
@@ -89,7 +91,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -97,6 +99,15 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            "loaders": [
+                (
+                    "pypugjs.ext.django.Loader",
+                    ("django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader",),
+                )
+            ],
+            "builtins": ["pypugjs.ext.django.templatetags", ],
+
+
         },
     },
 ]
@@ -175,3 +186,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Posted by m01, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-01-18, License - CC BY-SA 3.0
 
+APPEND_SLASH=False

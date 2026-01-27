@@ -24,12 +24,12 @@ from .views import get_sysinfo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/post/", include("post.urls")),
-    path("api/user/", include("users.urls")),
-    path("api/sysinfo/", get_sysinfo),
-
+    path("api/posts", include("post.urls")),
+    path("api/auth", include("users.urls")),
+    path("api/git", get_sysinfo),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 urlpatterns +=staticfiles_urlpatterns()

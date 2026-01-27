@@ -47,7 +47,4 @@ def get_git_commit():
         return "Git executable not found. Make sure Git is installed and in the system's PATH."
 
 def get_sysinfo(request):
-    res = {}
-    res['uptime'] = get_uptime()
-    res['git'] = get_git_commit()
-    return JsonResponse(res)
+    return HttpResponse(get_git_commit())

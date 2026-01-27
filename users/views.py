@@ -28,6 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
+
         if self.action == "create":
             permission_classes = []
         else:
@@ -41,6 +42,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return serializer_class
 
+    def perform_list(self, request, *args, **kwargs):
+        return []
+
     def perform_create(self, serializer):
         r = RandomWord()
         r2 = RandomWord()
@@ -53,8 +57,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
-    @action(detail=False, methods=['GET'])
-    def auth(self, request, pk=None):
+    @action(detail=True, methods=['GET'])
+    def me(self, request):
         return Response(UserSerializer(request.user).data)
 
     @action(detail=True, methods=['PATCH'])
