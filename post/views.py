@@ -16,7 +16,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    #permissions = [IsAuthenticated]
+    permissions = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering = ['-created_at']
 

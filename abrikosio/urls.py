@@ -17,18 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.views import MyTokenObtainPairView
 from .views import get_sysinfo
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name="index.pug")),
     path('admin/', admin.site.urls),
     path("api/posts", include("post.urls")),
-    path("api/auth", include("users.urls")),
+    path("api/users/", include("users.urls")),
     path("api/git", get_sysinfo),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
+    path("api/auth/me", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/auth/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

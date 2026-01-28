@@ -1,21 +1,38 @@
 import os
 
-from rest_framework import viewsets, status
+from django.contrib.auth.hashers import check_password
+from django.db.utils import IntegrityError
+from django.http.response import HttpResponse
+from rest_framework import viewsets, status,exceptions
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 from users.models import User
 from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer, UserSerializerForUpdate
 from wonderwords import RandomWord
-
 
 # Create your views here.
 class MyTokenObtainPairView(TokenObtainPairView):
     """Token view"""
 
     serializer_class = MyTokenObtainPairSerializer
+
+
+def response_token(user):
+    refresh = RefreshToken.for_user(user)
+
+    token = {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+    response = Response(token, status=status.HTTP_201_CREATED)
+    response.set_cookie('access', token['access'])
+    response.set_cookie('refresh', token['refresh'])
+    return response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,8 +45,8 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-
-        if self.action == "create":
+        print(self.action)
+        if self.action in ["create", 'login']:
             permission_classes = []
         else:
             permission_classes = [IsAuthenticated]
@@ -42,24 +59,38 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return serializer_class
 
-    def perform_list(self, request, *args, **kwargs):
-        return []
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         r = RandomWord()
         r2 = RandomWord()
-        instance = serializer.save()
-        if self.request.data['email'] == os.getenv("SUPER_USER"):
-            instance.publisher = True
-        instance.nickname = r.word() + ' ' + r2.word()
-        instance.save()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            user = serializer.save()
+            if self.request.data['email'] == os.getenv("SUPER_USER"):
+                user.publisher = True
+            user.nickname = r.word() + ' ' + r2.word()
+            user.save()
+            return response_token(user)
+        except IntegrityError as e:
+            return Response({"detail": "User exists"}, status=status.HTTP_409_CONFLICT)
 
+    @action(detail=False, methods=['POST'])
+    def login(self, request):
+        try:
+            email = request.data['email']
+            password = request.data['password']
+        except KeyError as e:
+            raise exceptions.NotAcceptable(f'Field required: "{e}"')
+        user = User.objects.get(email=email)
+        if check_password(password, user.password):
+            return response_token(user)
+        return HttpResponse('Unauthorized', status=401)
 
-
-
-    @action(detail=True, methods=['GET'])
-    def me(self, request):
-        return Response(UserSerializer(request.user).data)
+    @action(detail=False, methods=['GET'])
+    def me(self, request, *args, **kwargs):
+        print('zzzzzzzzz',request.user)
+        return response_token(request.user)
 
     @action(detail=True, methods=['PATCH'])
     def set_password(self, request, pk=None):

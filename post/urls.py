@@ -9,7 +9,6 @@ router = DefaultRouter()
 router.register("rate", RateViewSet, basename="rate")
 router.register("", PostViewSet, basename="post")
 
-
 urlpatterns = router.urls
 
 #urlpatterns+=path('admin/', FrontendTemplateView)

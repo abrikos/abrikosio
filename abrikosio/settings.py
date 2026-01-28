@@ -90,7 +90,7 @@ ROOT_URLCONF = 'abrikosio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -106,7 +106,6 @@ TEMPLATES = [
                 )
             ],
             "builtins": ["pypugjs.ext.django.templatetags", ],
-
 
         },
     },
@@ -127,7 +126,6 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT", default="5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -154,8 +152,8 @@ REST_FRAMEWORK = {
     ],
 }
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=150),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=int(os.getenv("TOKEN_ACCESS_DAYS", 1))),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=int(os.getenv("TOKEN_REFRESH_DAYS", 1))),
 }
 
 # Internationalization
@@ -174,7 +172,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 AUTH_USER_MODEL = "users.User"
 
@@ -186,4 +184,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Posted by m01, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-01-18, License - CC BY-SA 3.0
 
-APPEND_SLASH=False
+# APPEND_SLASH=False

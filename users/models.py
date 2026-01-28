@@ -34,8 +34,8 @@ class User(AbstractUser):
     objects = Manager()
     username = None
     email = models.EmailField(verbose_name="email", unique=True)
-    avatar = models.ImageField(upload_to=avatar_rename, verbose_name="AvatarImage", null=True, blank=True)
-    tg_chat_id = models.CharField(max_length=150, verbose_name="Telegram chat id", null=True, blank=True)
+    #avatar = models.ImageField(upload_to=avatar_rename, verbose_name="AvatarImage", null=True, blank=True)
+    avatar = models.CharField( verbose_name="User avatar", null=True, blank=True)
     nickname = models.CharField(max_length=150, verbose_name="Nickname", null=True, blank=True)
     publisher = models.BooleanField(verbose_name="Is publisher", default=False )
 
