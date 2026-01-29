@@ -1,6 +1,6 @@
 html
     head
-        title HHHHHHHHH2222
+        title {% block title %}i.o.Abrikos{% endblock %}
         meta(charset="utf-8")
         meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
 
@@ -9,13 +9,39 @@ html
 
     body
         div#app
-            q-layout( view="lHh Lpr fff")
+            q-layout( view="hHh Lpr lff")
                 q-header( elevated class="glossy")
                     q-toolbar
-                        q-btn( flat dense round @click="drawerState = !drawerState" aria-label="Menu" icon="menu")
+                        q-btn( flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="menu")
+                q-drawer(v-model="leftDrawerOpen" bordered side="left")
+                    q-list
+                        q-item(clickable tag="a"  to="/users/register")
+                            q-item-section(avatar)
+                                q-icon(name="edit" color="blue" )
+                            q-item-section
+                                q-item-label
+                                    a(href="/") Home
+                                q-item-label( caption) zzzzz
+                        q-item(clickable tag="a"  to="/users/register")
+                            q-item-section(avatar)
+                                q-icon(name="edit" color="blue" )
+                            q-item-section
+                                q-item-label
+                                    a(href="/users/register") Register
+                                q-item-label( caption) zzzzz
+                        q-item(clickable tag="a"  to="/users/login")
+                            q-item-section(avatar)
+                                q-icon(name="login" color="blue" )
+                            q-item-section
+                                q-item-label
+                                    a(href="/users/signup") Login
+                                q-item-label( caption)
                 q-page-container
                     q-page
-                        {% include "home.pug" %}
+                        q-btn(@click="inc") Inc [[store.count]]
+                        div#count
+                            {% block content %}{% endblock %}
         script(src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js")
         script(src="https://cdn.jsdelivr.net/npm/quasar@2.18.6/dist/quasar.umd.prod.js")
         script(src="/static/front/index.mjs" type="module")
+

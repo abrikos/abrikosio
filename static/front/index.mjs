@@ -1,48 +1,42 @@
-import home from './home.mjs';
-console.log(home)
-if (HTMLScriptElement.supports?.("importmap")) {
-    console.log("Browser supports import maps.");
-}
+import request from './fetch.js';
 
-const component1 = async ()=>{
-    const res = await fetch('/static/MyButton.vue')
-    const template = await res.text()
-    console.log(template)
-    return {
-        template,
-        setup() {
-            return {
-                props: ['prop'],
-                data() {
-                    return {item: 'test'}
-                },
-            }
-        }
+const store = Vue.reactive({
+    count: 10,
+    increment(){
+        this.count++
     }
-}
-
-
+})
 const init = async()=>{
-    const app = Vue.createApp({
+    const {createApp, ref} = Vue
+    const app = createApp({
+        delimiters: ['[[', ']]'],
         setup() {
+            const leftDrawerOpen = ref(true)
+            const user = ref({email:'abrikoz@gmail.com', password:'1'})
+
             return {
+                store,
+                user,
+                leftDrawerOpen,
                 data(){
                     return {
-                        contextHome:'zzzzz'
+
                     }
                 }
             }
         },
         methods: {
-            test() {
-                const x = home
-                console.log('ggggggg',x)
-                x.login()
+            login() {
+                request.post('/users/login/',this.user)
             },
-            test2(){
-
+            inc(){
+                console.log('IIII', this.store.count)
+                this.store.increment()
             },
-            home:()=>home
+        },
+        mounted(){
+            request.get('/users/me/')
+                .then(console.log)
         }
     })
     //const c = await component1()

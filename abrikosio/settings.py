@@ -184,4 +184,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Posted by m01, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-01-18, License - CC BY-SA 3.0
 
-# APPEND_SLASH=False
+APPEND_SLASH=False

@@ -80,17 +80,18 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             email = request.data['email']
             password = request.data['password']
+            user = User.objects.get(email=email)
+            if check_password(password, user.password):
+                return response_token(user)
         except KeyError as e:
             raise exceptions.NotAcceptable(f'Field required: "{e}"')
-        user = User.objects.get(email=email)
-        if check_password(password, user.password):
-            return response_token(user)
-        return HttpResponse('Unauthorized', status=401)
+        except User.DoesNotExist as e:
+            raise exceptions.NotAuthenticated(e)
+        return HttpResponse('User not found', status=401)
 
     @action(detail=False, methods=['GET'])
     def me(self, request, *args, **kwargs):
-        print('zzzzzzzzz',request.user)
-        return response_token(request.user)
+        return Response(UserSerializer(request.user).data)
 
     @action(detail=True, methods=['PATCH'])
     def set_password(self, request, pk=None):

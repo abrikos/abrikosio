@@ -20,14 +20,15 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from users.views import MyTokenObtainPairView
+from users.users_api import MyTokenObtainPairView
 from .views import get_sysinfo
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.pug")),
     path('admin/', admin.site.urls),
     path("api/posts", include("post.urls")),
-    path("api/users/", include("users.urls")),
+    path("api/users/", include("users.urls_api")),
+    path("users/", include("users.urls_views")),
     path("api/git", get_sysinfo),
     path("api/auth/me", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
