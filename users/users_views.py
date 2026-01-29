@@ -13,3 +13,8 @@ class UserViewSet(viewsets.ViewSet):
         context = {'title': 'Login'}
         return render(self.request, template_name='index.html', context=context)
 
+    @action(detail=False, methods=['GET'])
+    def cabinet(self, request, *args, **kwargs):
+        context = {'title': 'Login'}
+        return render(self.request, template_name='index.html', context=context)
+
