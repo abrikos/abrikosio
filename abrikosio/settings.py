@@ -165,6 +165,7 @@ USE_TZ = True
 STATIC_URL = '_nuxt/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'nuxt_static/public/_nuxt'),
+    os.path.join(BASE_DIR, 'nuxt_static/public'),
 ]
 SUPER_USER = os.getenv('SUPER_USER')
 AUTH_USER_MODEL = "users.User"

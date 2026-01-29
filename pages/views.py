@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 
 
 def home(request, *args, **kwargs):
-    context = {'title': 'ZZZZi.o.Abrikos', }
+    context = {'title': 'i.o.Abrikos', }
     return render(request, template_name='index.html', context=context)
 
 

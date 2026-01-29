@@ -8,6 +8,7 @@ router = DefaultRouter()
 
 router.register("rate", RateViewSet, basename="rate")
 router.register("", PostViewSet, basename="post")
+router.register(r'edit/(?P<id>)$', PostViewSet, basename='post_edit')
 
 urlpatterns = router.urls
 

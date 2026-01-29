@@ -17,7 +17,7 @@ class PostsViewSet(viewsets.ModelViewSet):
         context = {'title': post.title, 'short':post.short, 'poster':post.poster  }
         return render(self.request, template_name='index.html', context=context)
 
-    @action(detail=True, methods=['GET'])
-    def edit(self):
+    @action(detail=False, methods=['GET'])
+    def edit(self, request, *args, **kwargs):
         context = {'title': 'Edit post', }
         return render(self.request, template_name='index.html', context=context)
