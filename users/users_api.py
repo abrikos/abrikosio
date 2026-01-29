@@ -61,19 +61,22 @@ class UserApiViewSet(viewsets.ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
+
         r = RandomWord()
         r2 = RandomWord()
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
             user = serializer.save()
+
             if self.request.data['email'] == os.getenv("SUPER_USER"):
                 user.publisher = True
                 user.is_staff = True
                 user.is_superuser = True
             user.nickname = r.word() + ' ' + r2.word()
+
             user.save()
-            return response_token(user)
+            return Response(UserSerializer(request.user).data)
         except IntegrityError as e:
             return Response({"detail": "User exists"}, status=status.HTTP_409_CONFLICT)
 
