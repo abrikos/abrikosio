@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 import hashlib
+from abrikosio import settings
 
 # Create your models here.
 class Manager(UserManager):
@@ -40,10 +41,7 @@ class User(AbstractUser):
     publisher = models.BooleanField(verbose_name="Is publisher", default=False )
 
     @property
-    def display_name(self):
-        if self.first_name or self.last_name:
-            return self.first_name + ' ' + self.last_name
-        else:
-            return self.email
+    def is_admin(self):
+        return self.email == settings.SUPER_USER
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

@@ -90,7 +90,7 @@ ROOT_URLCONF = 'abrikosio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -170,10 +170,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '_nuxt/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'nuxt_static/public/_nuxt'),
 ]
+SUPER_USER = os.getenv('SUPER_USER')
 AUTH_USER_MODEL = "users.User"
 
 # Default primary key field type
@@ -184,4 +185,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Posted by m01, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-01-18, License - CC BY-SA 3.0
 
-APPEND_SLASH=False
+# APPEND_SLASH=False

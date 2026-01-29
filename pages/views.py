@@ -1,0 +1,17 @@
+from django.shortcuts import render
+from rest_framework import viewsets, status,exceptions
+from rest_framework.decorators import action
+
+
+def home(request, *args, **kwargs):
+    context = {'title': 'ZZZZi.o.Abrikos', }
+    return render(request, template_name='index.html', context=context)
+
+
+class PagesViewSet(viewsets.ViewSet):
+    @action(detail=False, methods=['GET'])
+    def about(self, request, *args, **kwargs):
+        context = {'title':'About', }
+        return render(request, template_name='index.html', context=context )
+
+

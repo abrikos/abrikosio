@@ -24,14 +24,15 @@ from users.users_api import MyTokenObtainPairView
 from .views import get_sysinfo
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="index.pug")),
+    path('', include("pages.urls")),
     path('admin/', admin.site.urls),
-    path("api/posts", include("post.urls")),
-    path("api/users/", include("users.urls_api")),
+    path("api/posts/", include("post.posts_urls_api")),
+    path("posts/", include("post.posts_urls")),
+    path("api/users/", include("users.users_urls_api")),
     path("users/", include("users.urls_views")),
     path("api/git", get_sysinfo),
-    path("api/auth/me", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/auth/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
+    #path("api/auth/me", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    #path("api/auth/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

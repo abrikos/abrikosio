@@ -35,7 +35,7 @@ def response_token(user):
     return response
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserApiViewSet(viewsets.ModelViewSet):
     """User REST"""
 
     queryset = User.objects.all()
@@ -45,7 +45,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        print(self.action)
+        print('User api action:', self.action)
         if self.action in ["create", 'login']:
             permission_classes = []
         else:
@@ -69,6 +69,8 @@ class UserViewSet(viewsets.ModelViewSet):
             user = serializer.save()
             if self.request.data['email'] == os.getenv("SUPER_USER"):
                 user.publisher = True
+                user.is_staff = True
+                user.is_superuser = True
             user.nickname = r.word() + ' ' + r2.word()
             user.save()
             return response_token(user)
