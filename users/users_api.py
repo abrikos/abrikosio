@@ -22,14 +22,14 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-def response_token(user):
+def set_cookie(user):
     refresh = RefreshToken.for_user(user)
 
     token = {
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
-    response = Response(token, status=status.HTTP_201_CREATED)
+    response = Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
     response.set_cookie('access', token['access'])
     response.set_cookie('refresh', token['refresh'])
     return response
@@ -76,7 +76,7 @@ class UserApiViewSet(viewsets.ModelViewSet):
             user.nickname = r.word() + ' ' + r2.word()
 
             user.save()
-            return Response(UserSerializer(request.user).data)
+            return set_cookie(user)
         except IntegrityError as e:
             return Response({"detail": "User exists"}, status=status.HTTP_409_CONFLICT)
 
@@ -87,12 +87,12 @@ class UserApiViewSet(viewsets.ModelViewSet):
             password = request.data['password']
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                return response_token(user)
+                return set_cookie(user)
         except KeyError as e:
             raise exceptions.NotAcceptable(f'Field required: "{e}"')
         except User.DoesNotExist as e:
             raise exceptions.NotAuthenticated(e)
-        return HttpResponse('User not found', status=401)
+        return HttpResponse('Wrong credentials', status=404)
 
     @action(detail=False, methods=['GET'])
     def me(self, request, *args, **kwargs):

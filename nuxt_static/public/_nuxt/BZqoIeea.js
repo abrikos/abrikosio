@@ -1,1 +1,0 @@
-import{L as e,aP as n,h as c,O as r,k as l,aQ as i}from"./BE-S2lnh.js";const _=e({name:"QCardActions",props:{...n,vertical:Boolean},setup(a,{slots:s}){const o=i(a),t=l(()=>`q-card__actions ${o.value} q-card__actions--${a.vertical===!0?"vert column":"horiz row"}`);return()=>c("div",{class:t.value},r(s.default))}});export{_};
