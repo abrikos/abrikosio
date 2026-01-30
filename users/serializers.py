@@ -58,4 +58,11 @@ class UserSerializer(serializers.ModelSerializer):
 class UserSerializerForUpdate(UserSerializer):
     class Meta:
         model = User
-        fields = tuple(set(UserSerializer.Meta.fields).difference(('email', 'id', 'password', 'publisher', 'avatar')))
+        fields = tuple(set(UserSerializer.Meta.fields).difference(('email', 'id', 'password', 'publisher')))
+    def validate(self, attrs):
+        if 'password' in attrs and 'password2' in attrs:
+            if attrs["password"] != attrs["password2"]:
+                raise serializers.ValidationError(
+                    {"password": "Password fields didn't match."}
+            )
+        return attrs
