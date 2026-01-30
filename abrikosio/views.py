@@ -33,18 +33,18 @@ def get_git_commit():
         # Run the git command to get the full commit hash (SHA-1)
         # git log -n 1 --format='%s -- %cd' --date=format-local:'%Y-%m-%d %H:%M:%S'
         result = subprocess.run(
-            ['git', 'log', '-n 1', '--format="%s -- %cd"', "--date=format-local:'%Y-%m-%d %H:%M:%S'"],
+            ['git', 'log', '-n 1', '--format=%s -- %cd', "--date=format-local:'%Y-%m-%d %H:%M:%S'"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             check=True
         )
         # Strip leading/trailing whitespace and return the hash
-        return result.stdout.strip()
+        return {'commit':result.stdout.strip()}
     except subprocess.CalledProcessError as e:
         return f"Error executing git command: {e.stderr}"
     except FileNotFoundError:
         return "Git executable not found. Make sure Git is installed and in the system's PATH."
 
 def get_sysinfo(request):
-    return HttpResponse(get_git_commit())
+    return JsonResponse(get_git_commit())
