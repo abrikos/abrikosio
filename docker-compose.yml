@@ -1,5 +1,5 @@
 services:
-  web:
+  backend:
     env_file:
       - ./.env
     environment:
@@ -16,10 +16,9 @@ services:
         condition: service_healthy
     develop:
       watch:
-        - action: rebuild
+        - action: sync
           path: .
           target: /app
-          initial_sync: true
           ignore:
             - .git/
             - .github/
@@ -42,7 +41,7 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 30s
-      timeout: 10s
+      timeout: 2s
       retries: 5
 networks:
   default:

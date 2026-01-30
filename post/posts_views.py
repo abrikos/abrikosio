@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets, status, exceptions
 from rest_framework.decorators import action
@@ -13,9 +14,13 @@ class PostsViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
-        post = Post.objects.get(pk=pk)
-        context = {'title': post.title, 'short':post.short, 'poster':post.poster  }
-        return render(self.request, template_name='index.html', context=context)
+        try:
+            post = Post.objects.get(pk=pk)
+
+            context = {'title': post.title, 'short':post.short, 'poster':post.poster  }
+            return render(self.request, template_name='index.html', context=context)
+        except Exception as e:
+            return HttpResponse("Not found", status=status.HTTP_404_NOT_FOUND)
 
     @action(detail=False, methods=['GET'])
     def edit(self, request, *args, **kwargs):

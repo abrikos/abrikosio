@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django_browser_reload",
     'rest_framework',
     'corsheaders',
     'users',
@@ -57,8 +56,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+if DEBUG :
+    INSTALLED_APPS.append("django_browser_reload")
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:9000',
     'http://127.0.0.1:9000'
@@ -164,8 +167,8 @@ USE_TZ = True
 
 STATIC_URL = '_nuxt/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'nuxt_static/public/_nuxt'),
-    os.path.join(BASE_DIR, 'nuxt_static/public'),
+    os.path.join(BASE_DIR, 'nuxt_static/_nuxt'),
+    os.path.join(BASE_DIR, 'nuxt_static'),
 ]
 SUPER_USER = os.getenv('SUPER_USER')
 AUTH_USER_MODEL = "users.User"
