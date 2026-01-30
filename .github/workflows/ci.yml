@@ -43,7 +43,7 @@ jobs:
             git pull
             
             docker-compose down
-            docker-compose up -d --build
+            docker-compose up -d --build --remove-orphans
             
 
 #If you are using Github action, you have local PC for development, you access Github via ssh and you have a remote server where you want to deploy your code, following steps might apply to you.

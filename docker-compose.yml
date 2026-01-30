@@ -1,4 +1,15 @@
 services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "127.0.0.1:8000:80"
+    volumes:
+      - ./docker:/etc/nginx/conf.d
+      - bundle:/usr/share/nginx/www
+    restart: always
+    depends_on:
+      - backend
+
   backend:
     env_file:
       - ./.env
@@ -8,12 +19,11 @@ services:
     command: >
       bash -c "./start-django-in-docker.sh"
     volumes:
-      - static_volume:/app/static
-    ports:
-      - "127.0.0.1:8000:8000"
+      - bundle:/app/nuxt_static
+    expose:
+      - "8000"
     depends_on:
-      db:
-        condition: service_healthy
+       - db
     develop:
       watch:
         - action: sync
@@ -38,16 +48,12 @@ services:
       - "5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 30s
-      timeout: 2s
-      retries: 5
+
 networks:
   default:
 
 volumes:
   postgres_data:
     driver: local
-  static_volume:
+  bundle:
     driver: local
