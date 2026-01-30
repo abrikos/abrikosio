@@ -14,7 +14,15 @@
 ### Nginx 
 On host machine add nginx config *nginx-example.conf"
 
+### Environment
+Copy env-example to .env
+
+Project uses PostgresSQL
+
+**SUPER_USER** - One email  on which *is_admin* attribute will be set True 
+
 ### Startup
 ```shell
 docker-compose up [-d]
 ```
+
