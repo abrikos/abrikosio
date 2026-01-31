@@ -18,7 +18,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     }
 
     const instance = axios.create({
-        baseURL: '/api',
+        baseURL: devMode ? 'http://localhost:8000/api' : '/api',
     });
 
     instance.interceptors.response.use(

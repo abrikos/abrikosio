@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import noAvatar from '~~/public/no-avatar.png'
 interface Props {
   user?: object;
 }
 const {user} = defineProps<Props>()
-const noAvatar = '/_nuxt/no-avatar.png'
 const avatar = computed(() => {
   return user?.avatar ? user.avatar : noAvatar
 })

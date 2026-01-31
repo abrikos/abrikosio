@@ -29,7 +29,6 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 9000,
-    host:'abrikosio.local',
   },
   modules: [
     'nuxt-quasar-ui',
