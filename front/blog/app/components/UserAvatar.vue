@@ -11,7 +11,6 @@ const avatar = computed(() => {
 </script>
 
 <template lang="pug">
-  span zzz
   q-avatar(v-if="user" square)
     img(:src="avatar")
     q-tooltip {{user?.nickname}}
