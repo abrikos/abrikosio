@@ -62,10 +62,5 @@ export default defineNuxtConfig({
     iconSet: 'mdi-v7',
     lang: 'ru'
 
-  },
-  nitro: {
-    output: {
-      dir: '/home/abrikos/PycharmProjects/abrikosio/blog_static' // Change the main output directory from '.output' to 'mydir'
-    }
   }
 })
