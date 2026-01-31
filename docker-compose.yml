@@ -5,7 +5,7 @@ services:
       - "127.0.0.1:8000:80"
     volumes:
       - ./docker_volumes/nginx:/etc/nginx/conf.d
-      - bundle:/usr/share/nginx/www/
+      - front_bundles:/usr/share/nginx/html/
     restart: always
     depends_on:
       - backend
@@ -19,7 +19,7 @@ services:
     command: >
       bash -c "./start-django-in-docker.sh"
     volumes:
-      - bundle:/app/docker_volumes
+      - front_bundles:/app/docker_volumes/static
     expose:
       - "8000"
     depends_on:
@@ -55,5 +55,5 @@ networks:
 volumes:
   postgres_data:
     driver: local
-  bundle:
+  front_bundles:
     driver: local
