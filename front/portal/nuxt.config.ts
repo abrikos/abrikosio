@@ -1,19 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const devMode = process.env.NODE_ENV === 'development'
+const title = 'Abrikos portal'
+const description = 'My site'
+const image = ''
+
+
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2025-07-15',
   app:{
     head: {
-      title: '{{ title }}',
+      title,
       meta:[
-        { name: 'title', content: '{{ title }}' },
-        { property: 'og:site_name', content: 'Abrikosio' },
-        { property: 'og:title', content: '{{ title }}' },
-        { property: 'og:description', content: '{{short}}' },
-        { name: 'description', content: '{{short}}' },
-        { property: 'og:type', content: 'article' },
-        { property: 'og:image', content: '{{poster}}' },
+        { name: 'title', content: title },
+        { property: 'og:site_name', content: 'Abrikoz' },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { name: 'description', content: description },
+        { property: 'og:type', content: 'site' },
+        { property: 'og:image', content: image },
       ]
     }
   },
@@ -29,7 +34,7 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 9000,
-    host:'abrikosio.local',
+    // host:'abrikosio.local',
   },
   modules: [
     'nuxt-quasar-ui',
