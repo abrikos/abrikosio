@@ -5,7 +5,8 @@ services:
       - "127.0.0.1:8000:80"
     volumes:
       - ./docker:/etc/nginx/conf.d
-      - bundle:/usr/share/nginx/www
+      - bundle_blog:/usr/share/nginx/www/blog
+      - bundle_portal:/usr/share/nginx/www/portal
     restart: always
     depends_on:
       - backend
@@ -19,7 +20,8 @@ services:
     command: >
       bash -c "./start-django-in-docker.sh"
     volumes:
-      - bundle:/app/blog_static
+      - bundle_blog:/app/blog_static
+      - bundle_portal:/app/portal_static
     expose:
       - "8000"
     depends_on:
