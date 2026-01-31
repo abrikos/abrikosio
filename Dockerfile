@@ -28,8 +28,8 @@ RUN pip install -r requirements.txt
 
 # Копируем остальные файлы проекта в контейнер
 COPY . .
-COPY --from=portal /app/.output/public /app/portal_static/
-COPY --from=blog /app/.output/public /app/blog_static/
+COPY --from=portal /app/.output/public /app/docker_volumes/portal_static/
+COPY --from=blog /app/.output/public /app/docker_volumes/blog_static/
 COPY --from=blog /app/.output/public/index.html /app/templates/
 
 # Открываем порт 8000 для взаимодействия с приложением
