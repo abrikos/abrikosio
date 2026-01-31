@@ -65,7 +65,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     output: {
-      dir: '/home/abrikos/PycharmProjects/abrikosio/nuxt_static' // Change the main output directory from '.output' to 'mydir'
+      dir: '/home/abrikos/PycharmProjects/abrikosio/blog_static' // Change the main output directory from '.output' to 'mydir'
     }
   }
 })

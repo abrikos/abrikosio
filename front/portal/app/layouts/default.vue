@@ -59,8 +59,8 @@ const menuItems = computed(() => {
       show: true
     },
     {
-      title: 'Add post',
-      caption: 'Create post',
+      title: 'Проверка чеков',
+      caption: 'Из ФНС России',
       icon: 'mdi-pencil',
       link: '/posts/edit',
       show: loggedUser.value?.publisher

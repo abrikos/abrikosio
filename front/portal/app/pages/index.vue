@@ -9,9 +9,7 @@ onMounted(load)
 </script>
 
 <template lang="pug">
-div.flex
-  div(v-for="post of posts")
-    post-card(:post="post")
+div INDEX
 </template>
 
 <style scoped lang="sass">

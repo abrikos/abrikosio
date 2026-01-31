@@ -19,7 +19,7 @@ services:
     command: >
       bash -c "./start-django-in-docker.sh"
     volumes:
-      - bundle:/app/nuxt_static
+      - bundle:/app/blog_static
     expose:
       - "8000"
     depends_on:

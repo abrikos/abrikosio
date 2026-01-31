@@ -1,4 +1,12 @@
-FROM node:22-alpine AS builder
+FROM node:latest AS portal
+
+WORKDIR /app
+
+COPY ./front/portal ./
+RUN npm install
+RUN npm run generate
+
+FROM node:latest AS blog
 
 WORKDIR /app
 
@@ -20,8 +28,9 @@ RUN pip install -r requirements.txt
 
 # Копируем остальные файлы проекта в контейнер
 COPY . .
-COPY --from=builder /app/.output/public /app/nuxt_static/
-COPY --from=builder /app/.output/public/index.html /app/templates/
+COPY --from=portal /app/.output/public /app/portal_static/
+COPY --from=blog /app/.output/public /app/blog_static/
+COPY --from=blog /app/.output/public/index.html /app/templates/
 
 # Открываем порт 8000 для взаимодействия с приложением
 EXPOSE 8000
