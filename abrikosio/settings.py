@@ -93,7 +93,7 @@ ROOT_URLCONF = 'abrikosio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': [os.path.join(BASE_DIR, 'docker_volumes/static/blog'), ],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [

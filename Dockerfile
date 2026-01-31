@@ -30,7 +30,7 @@ RUN pip install -r requirements.txt
 COPY . .
 COPY --from=portal /app/.output/public /app/docker_volumes/static/portal/
 COPY --from=blog /app/.output/public /app/docker_volumes/static/blog/
-COPY --from=blog /app/.output/public/index.html /app/templates/
+#COPY --from=blog /app/.output/public/index.html /app/templates/
 
 # Открываем порт 8000 для взаимодействия с приложением
 EXPOSE 8000
