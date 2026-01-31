@@ -5,7 +5,7 @@ services:
       - "127.0.0.1:8000:80"
     volumes:
       - ./docker_volumes/nginx:/etc/nginx/conf.d
-      #- front_bundles:/usr/share/nginx/html/
+      - front_bundles:/usr/share/nginx/html/
     restart: always
     depends_on:
       - backend
