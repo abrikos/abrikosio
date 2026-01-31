@@ -11,9 +11,10 @@ const avatar = computed(() => {
 </script>
 
 <template lang="pug">
-    q-avatar(v-if="user" square)
-      img(:src="avatar")
-      q-tooltip {{user?.nickname}}
+  span zzz
+  q-avatar(v-if="user" square)
+    img(:src="avatar")
+    q-tooltip {{user?.nickname}}
 </template>
 
 <style scoped lang="sass">
