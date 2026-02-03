@@ -59,13 +59,6 @@ const menuItems = computed(() => {
       show: true
     },
     {
-      title: 'Проверка чеков',
-      caption: 'Из ФНС России',
-      icon: 'mdi-pencil',
-      link: '/posts/edit',
-      show: loggedUser.value?.publisher
-    },
-    {
       title: 'Sign out',
       caption: '',
       icon: 'mdi-logout',

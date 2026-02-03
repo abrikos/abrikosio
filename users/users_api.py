@@ -30,8 +30,15 @@ def set_cookie(user):
         'access': str(refresh.access_token),
     }
     response = Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-    response.set_cookie('access', token['access'])
-    response.set_cookie('refresh', token['refresh'])
+    import time
+    lease = 14 * 24 * 60 * 60  # 14 days in seconds
+    end = time.gmtime(time.time() + lease)
+    expires = time.strftime("%a, %d-%b-%Y %T GMT", end)
+    response.set_cookie('access',
+                        token['access'],
+                        samesite='strict',
+                        )
+    #response.set_cookie('refresh', token['refresh'])
     return response
 
 
@@ -87,7 +94,14 @@ class UserApiViewSet(viewsets.ModelViewSet):
             password = request.data['password']
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                return set_cookie(user)
+                #return set_cookie(user)
+                refresh = RefreshToken.for_user(user)
+
+                token = {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }
+                return Response(token)
         except KeyError as e:
             raise exceptions.NotAcceptable(f'Field required: "{e}"')
         except User.DoesNotExist as e:

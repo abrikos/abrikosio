@@ -34,7 +34,6 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 9000,
-    // host:'abrikosio.local',
   },
   modules: [
     'nuxt-quasar-ui',
@@ -62,5 +61,12 @@ export default defineNuxtConfig({
     iconSet: 'mdi-v7',
     lang: 'ru'
 
-  }
+  },
+  vite: {
+    server: {
+      allowedHosts: [
+        'abrikosio.local',
+      ],
+    },
+  },
 })

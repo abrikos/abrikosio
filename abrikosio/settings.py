@@ -166,10 +166,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '_nuxt/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'docker_volumes/static/blog/_nuxt'),
-#     os.path.join(BASE_DIR, 'docker_volumes/static/blog'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'docker_volumes/static/blog/_nuxt'),
+    os.path.join(BASE_DIR, 'docker_volumes/static/blog'),
+]
 SUPER_USER = os.getenv('SUPER_USER')
 AUTH_USER_MODEL = "users.User"
 

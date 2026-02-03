@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import noAvatar from '~~/app/assets/no-avatar.png'
 interface Props {
   user?: object;
 }
 const {user} = defineProps<Props>()
-const noAvatar = '/_nuxt/no-avatar.png'
 const avatar = computed(() => {
   return user?.avatar ? user.avatar : noAvatar
 })
@@ -11,9 +11,9 @@ const avatar = computed(() => {
 </script>
 
 <template lang="pug">
-    q-avatar(v-if="user" square)
-      img(:src="avatar")
-      q-tooltip {{user?.nickname}}
+  q-avatar(v-if="user" square)
+    img(:src="avatar")
+    q-tooltip {{user?.nickname}}
 </template>
 
 <style scoped lang="sass">
