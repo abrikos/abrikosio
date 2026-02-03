@@ -1,10 +1,10 @@
 from django.urls.conf import path, include
 from rest_framework.routers import DefaultRouter
 
-from users.users_api import UserApiViewSet
+from receipts.views import ReceiptApiViewSet
 
 router = DefaultRouter()
-router.register("", UserApiViewSet, basename="users")
+router.register("", ReceiptApiViewSet, basename="receipts")
 
 urlpatterns = [
     *router.urls,

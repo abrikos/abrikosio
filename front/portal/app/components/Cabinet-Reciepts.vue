@@ -1,7 +1,10 @@
 <script setup lang="ts">
-async function upload(file){
-  console.log(file)
-  await useNuxtApp().$POST('/receipts/upload',file)
+const $q = useQuasar()
+async function upload(file: string) {
+  const res = await useNuxtApp().$UPLOAD('/receipts/upload/', {file})
+  if(res){
+    $q.notify({message:JSON.stringify(res), color: 'green', position:'bottom-left'})
+  }
 }
 </script>
 

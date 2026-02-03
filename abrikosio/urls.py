@@ -32,8 +32,8 @@ urlpatterns = [
     path("api/users/", include("users.urls_users_api")),
     path("users/", include("users.urls_users_views")),
     path("api/git", get_sysinfo),
-    #path("api/auth/me", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    #path("api/auth/refresh/", MyTokenObtainPairView.as_view(), name="token_refresh"),
+    path("api/receipts/", include("receipts.urls")),
+
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 if settings.DEBUG:
