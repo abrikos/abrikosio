@@ -59,6 +59,13 @@ const menuItems = computed(() => {
       show: true
     },
     {
+      title: 'Games',
+      caption: '',
+      icon: 'mdi-home',
+      link: '/games',
+      show: true
+    },
+    {
       title: 'Add post',
       caption: 'Create post',
       icon: 'mdi-pencil',
@@ -82,7 +89,7 @@ const menuItems = computed(() => {
       title: 'Registration',
       caption: '',
       icon: 'mdi-login',
-      link: '/users/registration',
+      link: '/users/register',
       show: !loggedUser.value
     }
   ]
