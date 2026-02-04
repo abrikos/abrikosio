@@ -30,7 +30,7 @@ q-card.q-pa-sm
       q-btn.full-width(type="submit" label="Вход" color="primary" :flat="false")
     q-card-section
       div
-        router-link(to="/users/registration") Зарегистрироваться
+        router-link(to="/users/Register") Зарегистрироваться
       div
         router-link(to="/users/password-restore") Восстановить пароль
     q-card-section.text-red {{error?.error}}
