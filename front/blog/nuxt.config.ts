@@ -56,5 +56,10 @@ export default defineNuxtConfig({
     iconSet: 'mdi-v7',
     lang: 'ru'
 
+  },
+  vite:{
+    server: {
+      allowedHosts: ['localhost', '127.0.0.1', 'abrikosio.local'],
+    }
   }
 })

@@ -3,17 +3,17 @@ import os
 from django.contrib.auth.hashers import check_password
 from django.db.utils import IntegrityError
 from django.http.response import HttpResponse
-from rest_framework import viewsets, status,exceptions
+from rest_framework import viewsets, status, exceptions
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-
 from users.models import User
 from users.serializers import MyTokenObtainPairSerializer, UserSerializer, PasswordSerializer, UserSerializerForUpdate
 from wonderwords import RandomWord
+
 
 # Create your views here.
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -30,15 +30,8 @@ def set_cookie(user):
         'access': str(refresh.access_token),
     }
     response = Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-    import time
-    lease = 14 * 24 * 60 * 60  # 14 days in seconds
-    end = time.gmtime(time.time() + lease)
-    expires = time.strftime("%a, %d-%b-%Y %T GMT", end)
-    response.set_cookie('access',
-                        token['access'],
-                        samesite='strict',
-                        )
-    #response.set_cookie('refresh', token['refresh'])
+    response.set_cookie('access', token['access'])
+    response.set_cookie('refresh', token['refresh'])
     return response
 
 
@@ -65,7 +58,6 @@ class UserApiViewSet(viewsets.ModelViewSet):
             serializer_class = UserSerializerForUpdate
 
         return serializer_class
-
 
     def create(self, request, *args, **kwargs):
 
@@ -94,14 +86,7 @@ class UserApiViewSet(viewsets.ModelViewSet):
             password = request.data['password']
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                #return set_cookie(user)
-                refresh = RefreshToken.for_user(user)
-
-                token = {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                }
-                return Response(token)
+                return set_cookie(user)
         except KeyError as e:
             raise exceptions.NotAcceptable(f'Field required: "{e}"')
         except User.DoesNotExist as e:

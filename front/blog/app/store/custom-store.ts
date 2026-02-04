@@ -30,9 +30,7 @@ export const useCustomStore = defineStore('auth', {
 
         async login(credentials: UserPayloadInterface) {
             const token = await useNuxtApp().$POST(`/users/login/`, credentials)
-            const cookie = useCookie('access')
-            cookie.value = token.access
-            if(token?.access) {
+            if(token?.id) {
                 navigateTo(this.redirect)
             }
         },
