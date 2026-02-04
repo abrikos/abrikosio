@@ -59,9 +59,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-if DEBUG :
-    INSTALLED_APPS.append("django_browser_reload")
-    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+# if DEBUG :
+#     INSTALLED_APPS.append("django_browser_reload")
+#     MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:9000',
@@ -94,7 +94,7 @@ ROOT_URLCONF = 'abrikosio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'docker_volumes/static/blog'), ],
+        'DIRS': [os.path.join(BASE_DIR, 'docker_volumes/static/blog'), os.getenv('NUXT_DIST') ],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -167,7 +167,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '_nuxt/'
+
 STATICFILES_DIRS = [
+    os.path.join(os.getenv('NUXT_DIST'),'_nuxt'),
     os.path.join(BASE_DIR, 'docker_volumes/static/blog/_nuxt'),
     os.path.join(BASE_DIR, 'docker_volumes/static/blog'),
 ]
