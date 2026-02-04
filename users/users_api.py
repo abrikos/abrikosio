@@ -41,6 +41,11 @@ class UserApiViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_authenticators(self):
+        if self.request.path in 'POST':
+            return []
+        return super().get_authenticators()
+
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
