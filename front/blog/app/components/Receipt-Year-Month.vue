@@ -18,15 +18,15 @@ const showDetail = computed(()=>!!route.query.id)
     tbody
       tr
         th Орг
-        th Адрес
         th Сумма
         th Дата
 
       tr(v-for="(row, i) in list" :class="i % 2 ? 'bg-grey-4':''")
         td.cursor-pointer(@click="navigateTo({query:{...route.query, id:row.id}})") {{ row.org }}
-        td {{ row.address }}
-        td.text-right {{ $priceFormat(row.sum)}}
-        td.text-right {{ row.date }}
+          small {{ row.address }}
+        td.text-right(width="20%") {{ $priceFormat(row.sum)}}
+        td.text-right(width="20%")
+          small {{ row.date }}
 
   q-dialog(v-model="showDetail" persistent scrollable fullscreen)
     q-card
