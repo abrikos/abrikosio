@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import noAvatar from '~~/app/assets/no-avatar.png'
+import noAvatar from '~/assets/no-avatar.png'
 interface Props {
   user?: object;
 }
