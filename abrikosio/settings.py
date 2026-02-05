@@ -169,10 +169,13 @@ USE_TZ = True
 STATIC_URL = '_nuxt/'
 
 STATICFILES_DIRS = [
-    os.path.join(os.getenv('NUXT_DIST'),'_nuxt'),
     os.path.join(BASE_DIR, 'docker_volumes/static/blog/_nuxt'),
     os.path.join(BASE_DIR, 'docker_volumes/static/blog'),
 ]
+
+if os.getenv('NUXT_DIST'):
+    STATICFILES_DIRS.append(os.path.join(os.getenv('NUXT_DIST'),'_nuxt'),)
+
 SUPER_USER = os.getenv('SUPER_USER')
 AUTH_USER_MODEL = "users.User"
 
