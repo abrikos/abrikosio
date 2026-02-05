@@ -39,6 +39,12 @@ class ReceiptApiViewSet(viewsets.GenericViewSet):
 
     queryset = Receipt.objects.all()
     serializer_class = ReceiptSerializer
+    def get_authenticators(self):
+        print(self.request.method)
+        if self.request.path in ['/api/receipts/goods/', '/api/receipts/goods_list/']:
+            return []
+        return super().get_authenticators()
+
 
     def get_permissions(self):
         """

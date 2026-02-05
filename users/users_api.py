@@ -42,7 +42,7 @@ class UserApiViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def get_authenticators(self):
-        if self.request.path in 'POST':
+        if self.request.method == 'POST':
             return []
         return super().get_authenticators()
 

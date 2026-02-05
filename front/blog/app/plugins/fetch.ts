@@ -12,7 +12,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     function getHeaders(ct?: string | undefined) {
         const access_token = useCookie(config.public.authTokenName)
         return {
-            Authorization: access_token.value ? `Bearer ${access_token.value}` : '',
+            Authorization: access_token.value ? `Bearer ${encodeURIComponent(access_token.value)}` : '',
             'Content-Type': ct
         }
     }
@@ -29,6 +29,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
         (e) => {
             devMode && console.log(e.response);
             const error:{status:number,messages:string[]} = {status: 0, messages:[]}
+            console.error(e)
             switch (true) {
                 case [401,404].includes(e.status):
                     return
@@ -37,12 +38,13 @@ export default defineNuxtPlugin((_nuxtApp) => {
                     error.status = e.status
                     break
                 default:
-                    if (Array.isArray(e.response.data.detail)) {
-                        error.messages = e.response.data.detail.map((detail:any) => `${detail.loc[1]}: ${detail.msg}`)
+                    if(e.response) {
+                        if (Array.isArray(e.response?.data.detail)) {
+                            error.messages = e.response.data.detail.map((detail: any) => `${detail.loc[1]}: ${detail.msg}`)
+                        } else {
+                            error.messages = [e.status + ': ' + JSON.stringify(e.response.data)];
 
-                    } else {
-                        error.messages = [e.status + ': ' + JSON.stringify(e.response.data)];
-
+                        }
                     }
             }
             for (const message of error.messages) {
