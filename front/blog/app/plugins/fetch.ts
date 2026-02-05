@@ -29,7 +29,6 @@ export default defineNuxtPlugin((_nuxtApp) => {
         (e) => {
             devMode && console.log(e.response);
             const error:{status:number,messages:string[]} = {status: 0, messages:[]}
-            console.error(e)
             switch (true) {
                 case [401,404].includes(e.status):
                     return
