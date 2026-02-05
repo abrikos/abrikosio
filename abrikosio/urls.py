@@ -33,8 +33,9 @@ urlpatterns = [
     path("users/", include("users.urls_users_views")),
     path("api/git", get_sysinfo),
     path("api/receipts/", include("receipts.urls")),
+    path("api/seabattle/", include("seabattle.urls")),
 
-    path("__reload__/", include("django_browser_reload.urls")),
+    #path("__reload__/", include("django_browser_reload.urls")),
 ]
 if settings.DEBUG:
     urlpatterns +=staticfiles_urlpatterns()

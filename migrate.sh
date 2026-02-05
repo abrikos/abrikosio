@@ -6,3 +6,4 @@ python manage.py migrate
 git add post/migrations/*.py
 git add users/migrations/*.py
 git add receipts/migrations/*.py
+git add seabattle/migrations/*.py

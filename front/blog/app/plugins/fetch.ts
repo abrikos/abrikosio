@@ -35,14 +35,15 @@ export default defineNuxtPlugin((_nuxtApp) => {
                 case e.status >= 500:
                     error.messages = [e.statusText]
                     error.status = e.status
-                    break
+                    return
                 default:
                     if(e.response) {
                         if (Array.isArray(e.response?.data.detail)) {
                             error.messages = e.response.data.detail.map((detail: any) => `${detail.loc[1]}: ${detail.msg}`)
-                        } else {
+                        } else if(Array.isArray(e.response?.data)) {
+                            error.messages = e.response.data
+                        }else{
                             error.messages = [e.status + ': ' + JSON.stringify(e.response.data)];
-
                         }
                     }
             }
@@ -55,6 +56,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
                     position: 'bottom-left',
                 })
             }
+            return e.response
 
         },
     );
