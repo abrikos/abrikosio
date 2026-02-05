@@ -66,6 +66,13 @@ const menuItems = computed(() => {
       show: true
     },
     {
+      title: 'Цены на товары',
+      caption: '',
+      icon: 'mdi-currency-rub',
+      link: '/prices',
+      show: true
+    },
+    {
       title: 'Add post',
       caption: 'Create post',
       icon: 'mdi-pencil',

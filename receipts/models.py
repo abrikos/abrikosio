@@ -17,13 +17,14 @@ class Receipt(models.Model):
         on_delete=models.CASCADE,
         related_name="receipt_user_set",
     )
-    document = models.CharField(max_length=50, blank=True)
+    kkm = models.CharField(max_length=50, blank=True)
     operator = models.CharField(max_length=500, blank=True)
     place = models.CharField(max_length=500, blank=True)
     address = models.CharField(max_length=500, blank=True)
     org = models.CharField(max_length=500, blank=True)
     fiscal = models.BigIntegerField()
-    date = models.DateTimeField()
+    total_sum = models.FloatField(default=0)
+    date = models.DateTimeField(unique=True)
 
 class Item(models.Model):
     """Receipt item model"""

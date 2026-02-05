@@ -1,20 +1,25 @@
 <script setup lang="ts">
-const route=useRoute()
+const route = useRoute()
 const $q = useQuasar()
-const search = ref(route.query.search)
+
+
 async function upload(file: string) {
   const res = await useNuxtApp().$UPLOAD('/receipts/upload/', {file})
-  if(res){
-    $q.notify({message:JSON.stringify(res), color: 'green', position:'bottom-left'})
+  if (res) {
+    $q.notify({message: JSON.stringify(res), color: 'green', position: 'bottom-left'})
   }
+}
+const search = ref(route.query.search)
+function doSearch() {
+  navigateTo({query: {search:search.value, tab: 'receipts'}})
 }
 </script>
 
 <template lang="pug">
   q-file(@update:model-value="upload" label="Choose JSON" outlined counter)
-  q-input(v-model="search")
+  q-input(v-model="search" placeholder="Поиск..." @keyup.enter.native="doSearch")
     template(v-slot:after)
-      q-btn(@click="navigateTo({query:{search, tab:'receipts'}})" icon="mdi-magnify" )
+      q-btn(@click="doSearch" icon="mdi-magnify" )
       q-btn(@click="navigateTo({query:{tab:'receipts'}})" icon="mdi-close" )
   receipt-search(v-if="route.query.search")
   receipt-monthly(v-else-if="!route.query.year && !route.query.month")

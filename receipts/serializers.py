@@ -21,7 +21,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
     sum = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Receipt
-        fields = "document", "operator", "place", 'id', 'date', 'address', 'org', 'user', 'fiscal', 'items', 'sum'
+        fields = "kkm", "operator", "place", 'id', 'date', 'address', 'org', 'user', 'fiscal', 'items', 'sum', 'total_sum'
 
     def get_sum(self,obj):
         queryset = Item.objects.filter(receipt=obj)
