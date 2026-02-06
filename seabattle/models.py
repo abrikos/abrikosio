@@ -30,7 +30,7 @@ class SeaBattle(models.Model):
 
     @property
     def is_active(self):
-        return len(self.field_my) and len(self.field_op)
+        return bool(len(self.field_my)) and bool(len(self.field_op))
 
 class SeaBattleSerializerList(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
