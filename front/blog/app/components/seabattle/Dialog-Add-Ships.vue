@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import type {ICell, ISeaBattle} from "~/components/seabattle/index";
+
+const cell = defineModel<ICell>()
+const {onAddShip} = defineProps<{onAddShip:Function}>()
+
+
+</script>
+
+<template lang="pug">
+  q-card
+    q-card-section
+      table
+        tbody
+          tr
+            th
+            th Horizontal
+            th Vertical
+          tr(v-for="ship in 5" v-if="!cell.ship")
+            td {{ship}}
+            td(v-for="horizontal in [true,false]" )
+              q-btn(@click="onAddShip({...cell, horizontal, ship})" :icon="horizontal ? 'mdi-arrow-right':'mdi-arrow-down'" )
+      q-btn(@click="clearShip(cell)") Clear
+
+</template>
+
+<style scoped>
+
+</style>

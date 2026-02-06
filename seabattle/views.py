@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from seabattle.models import SeaBattle, SeaBattleSerializer
+from seabattle.models import SeaBattle, SeaBattleSerializerCreate, SeaBattleSerializerPlay, SeaBattleSerializerList
 
 
 # Create your views here.
@@ -15,9 +15,9 @@ def check_all_ships(field:list[dict]):
         if not len(ship):
             errors.append(f'Ship {ship_size} must be placed')
         elif len(ship) != ship_size:
-            errors.append(f'Ship {ship_size} has collision')
+            errors.append(f'The ship {ship_size} has wrong length ({len(ship)})')
         elif has_collision(field,ship,ship_size):
-            errors.append(f'Ship {ship_size} collision')
+            errors.append(f'The ship {ship_size} is in contact with another')
     return errors
 
 def has_collision(field, ship, ship_size):
@@ -30,6 +30,24 @@ def has_collision(field, ship, ship_size):
     return False
 
 class SBApiViewSet(viewsets.GenericViewSet):
+    queryset = SeaBattle.objects.all()
+    serializer_class = SeaBattleSerializerList
+
+    #@action(detail=False, methods=['GET'])
+    def list(self, request):
+        return Response(SeaBattleSerializerList(self.queryset, many=True).data)
+
+    @action(detail=True, methods=['GET'])
+    def play(self, request, pk=None):
+        sb = SeaBattle.objects.get(pk=pk, user=request.user)
+        return Response(SeaBattleSerializerPlay(sb).data)
+
+    @action(detail=False, methods=['GET'])
+    def start(self, request):
+        sb = SeaBattle(user=request.user)
+        sb.save()
+        return Response(SeaBattleSerializerCreate(sb).data)
+
     @action(detail=False, methods=['POST'])
     def check_field(self, request):
         field = request.data
@@ -38,4 +56,5 @@ class SBApiViewSet(viewsets.GenericViewSet):
             return Response(errors, status=status.HTTP_406_NOT_ACCEPTABLE)
         sb = SeaBattle(user=request.user, field_my=field, field_op=field)
         sb.save()
-        return Response(SeaBattleSerializer( sb).data)
+        return Response(SeaBattleSerializerCreate(sb).data)
+

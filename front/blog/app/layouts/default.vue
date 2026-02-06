@@ -9,12 +9,13 @@
 
     q-drawer(v-model="leftDrawerOpen" bordered side="left")
       q-list
-        q-item(v-for="link in menuItems.filter(i=>i.show)" clickable tag="a"  :to="link.link")
+        q-item(v-for="item in menuItems.filter(i=>i.show)" clickable tag="a"  :to="item.link")
           q-item-section(avatar)
-            q-icon(:name="link.icon" color="blue" )
+            q-icon(:name="item.icon" color="blue" )
           q-item-section
-            q-item-label {{ link.title }}
-            q-item-label( caption) {{ link.caption }}
+            q-item-label {{ item.title }}
+            q-item-label( caption) {{ item.caption }}
+
         q-item(v-if="loggedUser" clickable tag="a"  to="/users/cabinet")
           q-item-section(avatar)
             user-avatar(:user="loggedUser")
@@ -59,10 +60,10 @@ const menuItems = computed(() => {
       show: true
     },
     {
-      title: 'Games',
+      title: 'Sea battle',
       caption: '',
-      icon: 'mdi-home',
-      link: '/games',
+      icon: 'mdi-ship-wheel',
+      link: '/seabattle',
       show: true
     },
     {
