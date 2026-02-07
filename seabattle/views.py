@@ -140,33 +140,33 @@ class SBApiViewSet(viewsets.GenericViewSet):
 
     def retrieve(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk)
-        return Response(SeaBattleSerializerPlay(sb).data)
+        return Response(SeaBattleSerializerPlay(sb, context={'request':request}).data)
 
     @action(detail=True, methods=['PATCH'], permission_classes=[IsAuthenticated])
     def strike(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk, user=request.user)
+        field_op = sb.field_player if request.user == sb.user else sb.field_user
+        field_my = sb.field_player if request.user != sb.user else sb.field_user
         data = request.data
-        cell = found_in_field(sb.field_op, data)
+        cell = found_in_field(field_op, data)
         if cell:
             cell['strike'] = True
-            if 'isShip' in cell:
-                cell['hit'] = True
         else:
             data['strike'] = True
             cell = data
-            sb.field_op.append(data)
+            sb.field_player.append(data)
         if 'isShip' not in cell:
-            strike = ai_choose_strike(sb.field_my)
+            strike = ai_choose_strike(field_my)
             while 'isShip' in strike:
-                strike = ai_choose_strike(sb.field_my)
+                strike = ai_choose_strike(field_my)
         sb.save()
-        return Response(SeaBattleSerializerPlay(sb).data)
+        return Response(SeaBattleSerializerPlay(sb, context={'request':request}).data)
 
     @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])
     def random(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk, user=request.user)
-        sb.field_my = place_random_ships(sb)
-        return Response(SeaBattleSerializerPlay(sb).data)
+        sb.field_user = place_random_ships(sb)
+        return Response(SeaBattleSerializerPlay(sb, context={'request':request}).data)
 
     @action(detail=False, methods=['GET'])
     def new(self, request):
@@ -184,10 +184,10 @@ class SBApiViewSet(viewsets.GenericViewSet):
 
         if sb.is_active:
             return Response({'my': ['Game already started']}, status=status.HTTP_406_NOT_ACCEPTABLE)
-        sb.field_my = field
-        sb.field_op = place_random_ships(sb)
-        errors = check_all_ships(sb.field_op, sb)
+        sb.field_user = field
+        sb.field_player = place_random_ships(sb)
+        errors = check_all_ships(sb.field_player, sb)
         if len(errors):
             return Response({'my': [], 'op': errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
         sb.save()
-        return Response(SeaBattleSerializerPlay(sb).data)
+        return Response(SeaBattleSerializerPlay(sb, context={'request':request}).data)

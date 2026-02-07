@@ -42,7 +42,7 @@ function cellClass(cell:ICell) {
 <template lang="pug">
   div.field.flex.wrap
     div.cell.cursor-pointer(v-for="cell in field" :class="cellClass(cell)" @click="onClick(cell)")
-      div.flex.justify-center.items-center.full-height.text-white(vif="cell.isShip") {{debug ? cell.ship: ''}}
+      div.flex.justify-center.items-center.full-height.text-white(vif="cell.isShip") {{cell.isShip? cell.ship: ''}}
 </template>
 
 <style scoped lang="sass">
@@ -62,7 +62,7 @@ function cellClass(cell:ICell) {
   background-color: green
 
 .strike
-  background-color: red
+  background-color: yellow
 
 .field
   width: v-bind(fs)

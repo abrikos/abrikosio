@@ -102,7 +102,7 @@ async function strike(cell: ICell) {
         q-btn(@click="game.field_my=[]") Clear
         div.text-red {{errorsMy.join(', ')}}
     div.col(v-if="game?.is_active")
-      sea-battle-field(v-model="game" :on-click="strike" game-field="field_op_masked")
+      sea-battle-field(v-model="game" :on-click="strike" game-field="field_op")
       div.text-red {{errorsOp.join(', ')}}
 </template>
 
