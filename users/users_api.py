@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, timedelta, UTC
 
 from django.contrib.auth.hashers import check_password
 from django.db.utils import IntegrityError
@@ -29,9 +30,10 @@ def set_cookie(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
+    expiry_time = datetime.now(UTC) + timedelta(days=7)
     response = Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-    response.set_cookie('access', token['access'])
-    response.set_cookie('refresh', token['refresh'])
+    response.set_cookie(key='access', value= token['access'], expires=expiry_time)
+    response.set_cookie(key='refresh', value=token['refresh'], expires=expiry_time)
     return response
 
 
