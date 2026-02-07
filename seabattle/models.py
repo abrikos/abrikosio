@@ -21,6 +21,7 @@ class SeaBattle(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
     def __str__(self):
         return self.user.nickname + self.date
 
@@ -32,19 +33,46 @@ class SeaBattle(models.Model):
     def is_active(self):
         return bool(len(self.field_my)) and bool(len(self.field_op))
 
+    @property
+    def field_op_masked(self):
+        def mask(cell):
+            if 'ship' in cell and 'isShip' in cell:
+                cell['hit'] = True
+            cell['ship'] = ''
+            cell['isShip'] = False
+            return cell
+        strike_ships_only = list(filter(lambda x: 'strike' in x and 'isShip' in x, self.field_op))
+        strike_empty_only = list(filter(lambda x: 'strike' in x, self.field_op))
+        mapped = list(map(mask, strike_ships_only + strike_empty_only))
+        return mapped
+
+
 class SeaBattleSerializerList(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
+
     class Meta:
         model = SeaBattle
         fields = ['id', 'rows', 'cols', 'date', 'is_active', 'user']
+
 
 class SeaBattleSerializerCreate(serializers.ModelSerializer):
     class Meta:
         model = SeaBattle
         fields = ['id']
 
+
 class SeaBattleSerializerPlay(SeaBattleSerializerList):
+    class Meta:
+        model = SeaBattle
+        fields = tuple(set(SeaBattleSerializerList.Meta.fields).difference(('ZZZZ',))) + ('field_op_masked', 'field_my')
+
+class SeaBattleSerializerOver(SeaBattleSerializerList):
     class Meta:
         model = SeaBattle
         fields = tuple(set(SeaBattleSerializerList.Meta.fields).difference(('ZZZZ',))) + ('field_op', 'field_my')
 
+    # def to_representation(self, instance):
+    #     ret = super().to_representation(instance)
+    #     # Add or modify a field in the output dictionary
+    #     ret['field_op'] = list(filter(lambda x:'strike' in x, map(lambda x: x, ret['field_op'])))
+    #     return ret

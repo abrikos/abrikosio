@@ -2,7 +2,7 @@
 import type {ICell, ISeaBattle} from "~/components/seabattle/index";
 
 const cell = defineModel<ICell>()
-const {onAddShip} = defineProps<{onAddShip:Function}>()
+const {onAddShip, onClearField} = defineProps<{onAddShip:Function, onClearField:Function}>()
 
 
 </script>
@@ -20,7 +20,7 @@ const {onAddShip} = defineProps<{onAddShip:Function}>()
             td {{ship}}
             td(v-for="horizontal in [true,false]" )
               q-btn(@click="onAddShip({...cell, horizontal, ship})" :icon="horizontal ? 'mdi-arrow-right':'mdi-arrow-down'" )
-      q-btn(@click="clearShip(cell)") Clear
+      q-btn(@click="onClearField(cell)") Clear
 
 </template>
 

@@ -10,13 +10,6 @@ from rest_framework.response import Response
 from seabattle.models import SeaBattle, SeaBattleSerializerCreate, SeaBattleSerializerPlay, SeaBattleSerializerList
 
 
-# Create your views here.
-class Cell:
-    def __init__(self, dictionary):
-        for key in dictionary:
-            setattr(self, key, dictionary[key])
-
-
 def check_all_ships(field: list[dict]):
     errors = []
     if not isinstance(field, list):
@@ -130,6 +123,11 @@ def place_random_ships(sb):
 def mask_opponent_field(field):
     return list(filter(lambda x: 'strike' in x, field))
 
+def ai_choose_strike(field):
+    not_strikes = list(filter(lambda x:'strike' not in x, field))
+    strike = random.choice(not_strikes)
+    strike['strike'] = True
+    return strike
 
 class SBApiViewSet(viewsets.GenericViewSet):
     queryset = SeaBattle.objects.all()
@@ -141,6 +139,24 @@ class SBApiViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk)
         # sb.field_op = mask_opponent_field(sb.field_op)
+        return Response(SeaBattleSerializerPlay(sb).data)
+
+    @action(detail=True, methods=['PATCH'], permission_classes=[IsAuthenticated])
+    def strike(self, request, pk=None):
+        sb = SeaBattle.objects.get(pk=pk, user=request.user)
+        data = request.data
+        cell = found_in_field(sb.field_op, data)
+        if cell:
+            cell['strike'] = True
+        else:
+            data['strike'] = True
+            cell = data
+            sb.field_op.append(data)
+        if 'isShip' not in cell:
+            strike = ai_choose_strike(sb.field_my)
+            while 'isShip' in strike:
+                strike = ai_choose_strike(sb.field_my)
+        sb.save()
         return Response(SeaBattleSerializerPlay(sb).data)
 
     @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated])

@@ -12,7 +12,7 @@ async function load() {
 onMounted(load)
 
 async function create() {
-  const query = await useNuxtApp().$GET(`/seabattle/start`)
+  const query = await useNuxtApp().$GET(`/seabattle/new`)
   if (!query || query.statusText) return
   navigateTo({query})
 }
@@ -29,9 +29,11 @@ function goToGame(id:number) {
 
 <template lang="pug">
   q-btn(@click="create") Create
-  q-table(:rows="games" :columns="cols" @row-click="(e,row)=>navigateTo({query:{id:row.id}})")
+  q-table(:rows="games" :columns="cols" @row-click="(e,row)=>navigateTo({query:{id:row.id}})" :table-row-class-fn="(props)=>props.is_active?'':'bg-red-1'")
     template(v-slot:body-cell-user="{row}")
-      UserAvatar(:user="row.user")
+      q-td
+        UserAvatar(:user="row.user")
+        span {{row.user.nickname}}
 </template>
 
 <style scoped>
