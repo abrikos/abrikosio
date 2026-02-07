@@ -10,12 +10,12 @@ from rest_framework.response import Response
 from seabattle.models import SeaBattle, SeaBattleSerializerCreate, SeaBattleSerializerPlay, SeaBattleSerializerList
 
 
-def check_all_ships(field: list[dict]):
+def check_all_ships(field: list[dict], sb):
     errors = []
     if not isinstance(field, list):
         errors.append('Wrong field data')
     else:
-        for ship_size in range(1, 6):
+        for ship_size in range(1, sb.ships + 1):
             ship = list(filter(lambda x: x['ship'] == ship_size and 'isShip' in x, field))
             if not len(ship):
                 errors.append(f'Ship {ship_size} must be placed')
@@ -101,9 +101,8 @@ def place_random_ships(sb):
     is_horizontal = [True, False]
     field = fill_field(sb)
     ships_field = []
-    for ship_size in range(5, 0, -1):
+    for ship_size in range(sb.ships, 0, -1):
         horizontal = random.choice(is_horizontal)
-
 
         field_no_collision = list(filter(check_collision, field))
         field_no_ship = list(filter(lambda x: 'ship' not in x, field_no_collision))
@@ -120,14 +119,17 @@ def place_random_ships(sb):
 
     return ships_field
 
+
 def mask_opponent_field(field):
     return list(filter(lambda x: 'strike' in x, field))
 
+
 def ai_choose_strike(field):
-    not_strikes = list(filter(lambda x:'strike' not in x, field))
+    not_strikes = list(filter(lambda x: 'strike' not in x, field))
     strike = random.choice(not_strikes)
     strike['strike'] = True
     return strike
+
 
 class SBApiViewSet(viewsets.GenericViewSet):
     queryset = SeaBattle.objects.all()
@@ -138,7 +140,6 @@ class SBApiViewSet(viewsets.GenericViewSet):
 
     def retrieve(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk)
-        # sb.field_op = mask_opponent_field(sb.field_op)
         return Response(SeaBattleSerializerPlay(sb).data)
 
     @action(detail=True, methods=['PATCH'], permission_classes=[IsAuthenticated])
@@ -148,6 +149,8 @@ class SBApiViewSet(viewsets.GenericViewSet):
         cell = found_in_field(sb.field_op, data)
         if cell:
             cell['strike'] = True
+            if 'isShip' in cell:
+                cell['hit'] = True
         else:
             data['strike'] = True
             cell = data
@@ -174,15 +177,16 @@ class SBApiViewSet(viewsets.GenericViewSet):
     @action(detail=True, methods=['POST'])
     def start(self, request, pk=None):
         field = request.data
-        errors = check_all_ships(field)
+        sb = self.queryset.get(pk=pk)
+        errors = check_all_ships(field, sb)
         if len(errors):
             return Response({'my': errors, 'op': []}, status=status.HTTP_406_NOT_ACCEPTABLE)
-        sb = self.queryset.get(pk=pk)
+
         if sb.is_active:
             return Response({'my': ['Game already started']}, status=status.HTTP_406_NOT_ACCEPTABLE)
         sb.field_my = field
         sb.field_op = place_random_ships(sb)
-        errors = check_all_ships(sb.field_op)
+        errors = check_all_ships(sb.field_op, sb)
         if len(errors):
             return Response({'my': [], 'op': errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
         sb.save()

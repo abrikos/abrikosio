@@ -28,8 +28,9 @@ function getRowColByIndex(game: ISeaBattle | undefined, index: number) {
   }
 }
 
-const debug = false
+const debug = true
 function cellClass(cell:ICell) {
+  if(cell.kill) return 'kill'
   if(cell.hit) return 'hit'
   if(cell.strike) return 'strike'
   if(cell.ship && cell.isShip) return 'ship'
@@ -53,6 +54,9 @@ function cellClass(cell:ICell) {
 
 .deny
   background-color: silver
+
+.kill
+  background-color: red
 
 .hit
   background-color: green

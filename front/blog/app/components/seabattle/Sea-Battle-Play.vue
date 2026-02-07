@@ -80,6 +80,7 @@ function clearField(cell: ICell) {
 }
 
 async function strike(cell: ICell) {
+  if(cell.strike) return
   const res = await useNuxtApp().$PATCH(`/seabattle/${route.query.id}/strike/`, cell)
   if (res) {
     game.value = res

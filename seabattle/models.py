@@ -17,6 +17,7 @@ class SeaBattle(models.Model):
     field_op = models.JSONField(default=list)
     rows = models.IntegerField(default=10)
     cols = models.IntegerField(default=10)
+    ships = models.IntegerField(default=5)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -35,12 +36,21 @@ class SeaBattle(models.Model):
 
     @property
     def field_op_masked(self):
+        #return self.field_op
         def mask(cell):
-            if 'ship' in cell and 'isShip' in cell:
-                cell['hit'] = True
-            cell['ship'] = ''
-            cell['isShip'] = False
+            if 'kill' not in cell:
+                cell['ship'] = ''
+            #cell['isShip'] = False
             return cell
+        def show_killed(cell):
+            return cell['ship'] == size and 'isShip' in cell and 'hit' in cell
+
+        for size in range(1, self.ships + 1):
+            killed = list(filter(show_killed, self.field_op))
+            if len(killed) == size:
+                for k in killed:
+                    k['kill'] = True
+                print(size, killed)
         strike_ships_only = list(filter(lambda x: 'strike' in x and 'isShip' in x, self.field_op))
         strike_empty_only = list(filter(lambda x: 'strike' in x, self.field_op))
         mapped = list(map(mask, strike_ships_only + strike_empty_only))

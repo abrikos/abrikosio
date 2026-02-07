@@ -7,6 +7,7 @@ export interface ICell {
     isShip?: boolean
     strike?: boolean
     hit?: boolean
+    kill?: boolean
 }
 
 export interface ISeaBattle {
