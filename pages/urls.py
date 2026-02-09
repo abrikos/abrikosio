@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from pages.views import  PagesViewSet, home
+from pages.views import PagesViewSet, home, clash
 
 router = DefaultRouter()
 # router.register("pages/", PagesViewSet, basename="pages")
@@ -9,5 +9,6 @@ router = DefaultRouter()
 urlpatterns = [
     path("", home),
     path("games/", home),
+    path("clash/", clash),
     *router.urls,
 ]
