@@ -37,7 +37,6 @@ def field_op_masked(obj, field):
         if len(killed) == size:
             for k in killed:
                 k['kill'] = True
-            print(size, killed)
     strike_ships_only = list(filter(lambda x: 'strike' in x and 'isShip' in x, field))
     strike_empty_only = list(filter(lambda x: 'strike' in x, field))
     mapped = list(map(mask, strike_ships_only + strike_empty_only))
