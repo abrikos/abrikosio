@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useCustomStore, type UserPayloadInterface} from '~/store/custom-store';
 import {useQuasar} from 'quasar'
+import PasswordConfirmation from "~/components/cabinet/PasswordConfirmation.vue";
 
 const {signup} = useCustomStore()
 

@@ -33,7 +33,7 @@ function cellClass(cell:ICell) {
   if(cell.kill) return 'kill'
   if(cell.hit) return 'hit'
   if(cell.strike) return 'strike'
-  if(cell.ship && cell.isShip) return 'ship'
+  if(cell.isShip) return 'ship'
   if(cell.ship && debug) return 'deny'
 }
 

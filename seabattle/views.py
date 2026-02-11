@@ -7,7 +7,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from seabattle.models import SeaBattle, SeaBattleSerializerCreate, SeaBattleSerializerPlay, SeaBattleSerializerList
+from seabattle.models import SeaBattle
+from seabattle.serializers import SeaBattleSerializerList, SeaBattleSerializerPlay, SeaBattleSerializerCreate
 
 
 def check_all_ships(field: list[dict], sb):
@@ -120,10 +121,6 @@ def place_random_ships(sb):
     return ships_field
 
 
-def mask_opponent_field(field):
-    return list(filter(lambda x: 'strike' in x, field))
-
-
 def ai_choose_strike(field):
     not_strikes = list(filter(lambda x: 'strike' not in x, field))
     strike = random.choice(not_strikes)
@@ -136,7 +133,7 @@ class SBApiViewSet(viewsets.GenericViewSet):
     serializer_class = SeaBattleSerializerList
 
     def list(self, request):
-        return Response(SeaBattleSerializerList(self.queryset, many=True).data)
+        return Response(SeaBattleSerializerList(SeaBattle.objects.all(), many=True).data)
 
     def retrieve(self, request, pk=None):
         sb = SeaBattle.objects.get(pk=pk)
