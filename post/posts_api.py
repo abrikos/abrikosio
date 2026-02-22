@@ -1,8 +1,13 @@
 # Create your views here.
+import os
+
+import requests
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
+from rest_framework.status import HTTP_406_NOT_ACCEPTABLE
+
 from .models import Post, Rate
 from .permissions import IsPublisher
 from .serializers import PostSerializer,  RateSerializer
@@ -47,6 +52,22 @@ class PostViewSet(viewsets.ModelViewSet):
     def user_posts(self, *args, **kwargs):
         user = self.request.user
         return Response(PostSerializer(Post.objects.filter(user=user), many=True).data)
+
+    @action(detail=True, methods=['POST'])
+    def upload(self, *args, **kwargs):
+        headers = {'Authorization': f'Bearer {os.getenv("IMAGEBAN_SECRET")}'}
+        if self.request.FILES:
+            try:
+                post = Post.objects.get(pk=kwargs['pk'], user=self.request.user)
+                for file in self.request.FILES:
+                    res = requests.post('https://api.imageban.ru/v1', files=dict(image=self.request.FILES[file]), headers=headers)
+                    print(res)
+                    data = res.json()
+                    post.images.append(data['data']['link'])
+                post.save()
+            except Exception as e:
+                return Response(e, status=HTTP_406_NOT_ACCEPTABLE)
+        return Response()
 
 class RateViewSet(viewsets.ModelViewSet):
     queryset = Rate.objects.all()

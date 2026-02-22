@@ -19,7 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
     rate = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Post
-        fields = "title", "short", "body", 'id', 'user', 'date', 'poster', 'published', 'rate'
+        fields = "title", "short", "body", 'id', 'user', 'date', 'poster', 'published', 'rate', 'images'
 
     def get_rate(self,obj):
         queryset = Rate.objects.filter(post=obj)

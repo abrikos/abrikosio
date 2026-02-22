@@ -18,6 +18,7 @@ class Post(models.Model):
     poster = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(blank=True, default=False)
+    images = models.JSONField(default=list)
 
     class Meta:
         ordering = ['-created_at']

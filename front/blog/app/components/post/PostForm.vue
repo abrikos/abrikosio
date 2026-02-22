@@ -14,14 +14,15 @@ async function load() {
   }
 }
 
-watch(()=>route.params.id, (value) => {
-  if(!value) {
+watch(() => route.params.id, (value) => {
+  if (!value) {
     post.value = {}
   }
 })
 
 onMounted(load)
 const errors = ref({})
+
 async function onSubmit() {
   if (!loggedUser.value) return;
   let res
@@ -32,16 +33,23 @@ async function onSubmit() {
   }
   if (res?.id) {
     $q.notify({message: 'Success', color: 'green'});
-    if(res.id) {
+    if (res.id) {
       navigateTo(`/posts/edit/${res.id}`)
     }
-  }else if(res.errors){
+  } else if (res.errors) {
     errors.value = res.errors
   }
 }
 
 async function onReset() {
   errors.value = {}
+  await load()
+}
+
+const poster = ref()
+
+async function upload(files: string) {
+  await useNuxtApp().$UPLOAD(`/posts/${route.params.id}/upload/`, files)
   await load()
 }
 
@@ -76,6 +84,9 @@ async function onReset() {
           q-card-actions.flex.justify-between
             q-btn(type="submit" color="primary" :flat="false" :label="route.params.id ? 'Save':'Create'")
             q-btn(type="reset" :flat="false" label="Reset" v-if="route.params.id")
+      q-file(v-model="poster" @update:model-value="upload" label="Upload images" multiple)
+      div.images.flex
+        img(:src="image" v-for="image of post.images" )
     div.col-sm
       router-link(:to="`/posts/${route.params.id}`") View Post
       div.preview
@@ -85,10 +96,14 @@ async function onReset() {
 </template>
 
 <style scoped lang="sass">
+.images
+  img
+    max-height: 100px
+    max-width: 100px
 .preview
   border: 1px solid black
   transform: scale(.7)
   transform-origin: top left
-  //transition: scale 0.3s ease
+//transition: scale 0.3s ease
 
 </style>
