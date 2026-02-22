@@ -41,6 +41,7 @@
 <script setup lang="ts">
 import {useCustomStore} from "~/store/custom-store";
 
+const $q= useQuasar()
 const router = useRouter();
 const {loggedUser, loading} = storeToRefs(useCustomStore())
 const git = ref({})
@@ -57,6 +58,13 @@ const menuItems = computed(() => {
       caption: '',
       icon: 'mdi-home',
       link: '/',
+      show: true
+    },
+    {
+      title: 'Snow flake',
+      caption: '',
+      icon: 'mdi-snowflake',
+      link: '/snowflake',
       show: true
     },
     {
@@ -107,8 +115,8 @@ const menuItems = computed(() => {
 })
 
 
-
-const leftDrawerOpen = ref(true);
+console.log($q.screen.lt.md)
+const leftDrawerOpen = ref(!$q.screen.lt.md);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

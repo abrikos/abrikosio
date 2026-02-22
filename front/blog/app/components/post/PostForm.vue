@@ -26,11 +26,11 @@ async function onSubmit() {
   if (!loggedUser.value) return;
   let res
   if (route.params.id) {
-    res = await useNuxtApp().$PATCH(`/posts/${route.params.id}`, post.value)
+    res = await useNuxtApp().$PATCH(`/posts/${route.params.id}/`, post.value)
   } else {
     res = await useNuxtApp().$POST(`/posts/`, post.value)
   }
-  if (res.id) {
+  if (res?.id) {
     $q.notify({message: 'Success', color: 'green'});
     if(res.id) {
       navigateTo(`/posts/edit/${res.id}`)

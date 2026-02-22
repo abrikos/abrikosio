@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import MarkDown from "~/components/cabinet/MarkDown.vue";
+
 const {post} = defineProps<{ post: object }>()
 
 </script>
