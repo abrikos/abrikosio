@@ -53,6 +53,10 @@ async function upload(files: string) {
   await load()
 }
 
+function addImage(image:string) {
+  post.value.body += `\n![](${image})`
+}
+
 </script>
 
 <template lang="pug">
@@ -86,7 +90,15 @@ async function upload(files: string) {
             q-btn(type="reset" :flat="false" label="Reset" v-if="route.params.id")
       q-file(v-model="poster" @update:model-value="upload" label="Upload images" multiple)
       div.images.flex
-        img(:src="image" v-for="image of post.images" )
+        div.q-pa-sm(v-for="image of post.images")
+          div.image.flex.items-center
+            img(:src="image")
+          div
+            q-btn(size="sm" icon="mdi-image" @click="post.poster=image")
+              q-tooltip Poster image
+            q-btn(size="sm" icon="mdi-text" @click="addImage(image)")
+              q-tooltip In text
+
     div.col-sm
       router-link(:to="`/posts/${route.params.id}`") View Post
       div.preview
@@ -97,9 +109,11 @@ async function upload(files: string) {
 
 <style scoped lang="sass">
 .images
-  img
-    max-height: 100px
-    max-width: 100px
+  .image
+    height: 100px
+    img
+      max-height: 100px
+      max-width: 100px
 .preview
   border: 1px solid black
   transform: scale(.7)
