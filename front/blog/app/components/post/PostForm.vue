@@ -54,7 +54,7 @@ async function upload(files: string) {
 }
 
 function addImage(image:string) {
-  post.value.body += `\n![](${image})`
+  post.value.body += `\n\n![](${image})`
 }
 
 </script>

@@ -65,14 +65,14 @@ const menuItems = computed(() => {
       caption: '',
       icon: 'mdi-snowflake',
       link: '/snowflake',
-      show: true
+      show: import.meta.env.DEV
     },
     {
       title: 'Sea battle',
       caption: '',
       icon: 'mdi-ship-wheel',
       link: '/seabattle',
-      show: true
+      show: import.meta.env.DEV
     },
     {
       title: 'Цены на товары',
