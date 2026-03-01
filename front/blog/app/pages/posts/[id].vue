@@ -33,7 +33,7 @@ async function load() {
 }
 
 const submitRate = async () => {
-  await useNuxtApp().$POST('/posts/rate', {value: rate.value, post_id: post.value.id})
+  await useNuxtApp().$POST('/posts/rate/', {value: rate.value, post_id: post.value.id})
   await load()
 }
 

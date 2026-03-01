@@ -75,5 +75,5 @@ class RateViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     http_method_names = ['post']
     def perform_create(self, serializer):
-        post = get_object_or_404(Post, pk=self.request.data['post'])
+        post = get_object_or_404(Post, pk=self.request.data['post_id'])
         serializer.save(user=self.request.user, post=post)
